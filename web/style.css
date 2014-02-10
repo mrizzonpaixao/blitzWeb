@@ -1,0 +1,473 @@
+/* 
+    Document   : style
+    Created on : Jan 10, 2014, 2:56:57 PM
+    Author     : matheus
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+root { 
+    display: block;
+}
+
+h2, h3, h1{color:#00106e;}
+
+a{
+text-decoration: none;}
+
+legend{
+font-size:20px;
+color:#00106e;
+font-weight: bold;}
+
+input{
+border-radius:3px;
+border: solid 1px #acacac;
+height:20px; }
+
+input:required:invalid, input:focus:invalid {
+  background-image: url(img/invalid.png);
+  background-position: right top;
+  background-repeat: no-repeat;
+}
+input:required:valid {
+  background-image: url(img/valid.png);
+  background-position: right top;
+  background-repeat: no-repeat;
+}
+
+textArea{
+ border-radius:3px;
+border: solid 1px #acacac;
+}
+
+html,body{     
+background: #F0F0F0;
+font-family:sans-serif;
+width: 100%;
+height: 100%;
+margin: 0px;
+padding: 0px;   
+position:relative;
+font-size:15px;
+}
+
+header{ 
+width:100%;
+background:#fff;
+box-shadow: 0px 0px 8px gray;
+z-index:3;
+}
+.logReg{
+position:absolute;
+top:15px;
+right:40px;
+overflow: hidden;
+}
+
+.btn{
+float: left;
+display: block;    
+background:#00106e;
+height:20px;
+width:80px; 
+cursor:pointer;
+font-weight: bold;
+text-align: center;
+padding:6px;
+border-radius: 4px;
+margin:5px;
+color:#fff;}
+
+.btn:hover{ background:gray;}
+
+button {
+background:#00106e;
+width:100px; 
+height:30px;
+cursor:pointer;
+font-weight: bold;
+border:0px;
+border-radius: 4px;
+color:#fff;
+margin-top:5px;}
+
+label{
+font-weight: bold;
+font-size: 13px;
+}
+
+.bubbleContent{
+border-radius: 20px;
+border:solid 4px #00106e;
+background:#fff;
+box-shadow: 0px 0px 8px gray;
+}
+
+.bubble{
+width:300px;    
+position:absolute;
+top:67px;
+right:140px;
+overflow: visible;
+padding:0px 5px;
+margin:0px;
+display:none;
+z-index:2000;
+
+}
+.bubble input{
+height:20px;
+width:230px;}
+
+.bubble img{
+position: absolute;
+top:-16px;
+}
+
+.bubble ul{list-style: none;}
+
+.bubble ul li{margin-bottom:5px;}
+
+.footer{ 
+width:90%;
+margin: 0 auto;
+padding:15px 0px;
+height:20px;
+border-top: solid 1px #00106e;
+z-index:3;
+overflow: hidden;
+position: relative;
+}
+
+.footer img{
+width:35px;
+position: absolute;
+top:17px;
+left:60px}
+
+.footEmail{
+float:left;
+width:300px;
+padding-left:100px;
+font-size: 20px;
+font-weight: bold;
+color:#00106e;}
+
+.copyright{
+float:right;
+width:300px;
+padding-left:100px;
+font-size: 20px;
+font-weight: bold;
+color:#00106e;}
+
+.navContainer{
+width:900px;
+overflow:hidden;
+margin: 0 auto;}
+
+nav ul{
+overflow:hidden;
+padding:0px;
+position:relative;
+list-style:none;
+width:504px;
+margin:0px 220px;
+margin-top:16px;
+font-size:17px;
+}
+
+nav ul li{
+float:left;
+width:120px;
+height:20px;
+text-align: center;
+padding:7px 3px; 
+overflow:hidden;
+position:relative;
+}
+
+nav ul li a{
+text-decoration:none;
+display:block;
+height:100%;
+z-index:1200;
+color:#000;
+position:relative;}
+
+.navBG{
+background:#00106e;
+height:100%;
+width :100%;
+position:absolute;
+top:34px;
+left:0px;}
+
+.bgarrow{
+display:block;
+margin:0 auto;
+margin-top:25px;
+width:10px;}
+
+header .logo{
+width:200px;
+margin: 0px 350px;
+margin-top:10px;}
+
+#main{ 
+width:950px;
+padding-top:40px;
+padding-bottom:40px;
+margin:0px auto;
+z-index:1;
+}
+
+/*HOME*/
+
+table{
+margin:0px;
+padding:0px;
+border:0px;
+border-spacing:0px !important;
+font-family:sans-serif;
+font-weight:bold;
+font-size:15px; }
+
+.content{
+width:900px;
+margin:0px 25px;
+position:relative;
+overflow:hidden;}
+
+.content h2{
+color:#00106e;
+border-bottom:solid 1px #00106e;
+padding-left:10px;}
+
+.content div{
+float:left;}
+
+.content table{
+width:350px;}
+
+.spacer{ height:6px;}
+
+.row{background:#E8E8E8;}
+
+.score{
+width:25px;
+text-align:right;}
+
+.date{
+width:50px;}
+
+.team2{
+text-align:right;
+width:165px;}
+
+.content table th{
+text-align:left;}
+
+.content table tr{
+margin:8px 0px;}
+
+.content table tr td{
+padding:5px !important;}
+
+.content table tr th{
+padding-bottom:5px !important;}
+
+.newsCont{
+font-size:15px;
+position:relative;
+height:250px;
+overflow:auto;
+padding-bottom:40px;
+}
+
+#news img{
+position:absolute;
+bottom:0px;
+left:0px;
+z-index:5;}
+
+.newsCont h3{
+font-size:18px;
+color:#00106e;}
+
+.newsInfo{
+font-size:10px;
+color:orange;
+margin-top:-17px;}
+
+#news{
+width:500px;
+padding-right:50px;}
+
+#schedule{width:350px;}
+
+.slideshow{
+position: relative;    
+width:900px;
+height:400px;
+margin:0px 25px;
+box-shadow: 0 0 8px #5C5C5C;
+overflow:hidden;}
+
+.slide{
+position: absolute; 
+top:0px; 
+left:0px;
+height:100%;
+width:100%;
+}
+
+.slide img{
+ height:100%;
+width:100%;   
+}
+
+/*REGISTRATION PAGE*/
+
+.regContainer{
+width:450px;
+margin:0 auto;
+}
+
+.regContainer form{width:250px; margin:0 auto;}
+
+.regContainer input{width:220px}
+
+.regContainer ul{list-style: none; width:250px; padding:0px;}
+
+.regContainer ul li{list-style: none; margin:10px;}
+
+.regContainer ul li button{margin-left:57px;}
+
+/*ABOUT PAGE*/
+
+#aboutImg{
+width:950px;
+height:430px}
+
+#aboutContent{
+max-width:250px;
+color:#fff;
+font-weight: bold;
+height:100%;
+padding:25px;
+position:absolute;
+top:0px;
+right:-300px;
+background-image: url('img/aboutBG.png');
+background-repeat:repeat;}
+
+
+
+#about{
+overflow:hidden;
+position: relative;
+box-shadow: 0px 0px 8px gray;
+height:430px }
+
+/*TEAM PAGE*/
+
+.teamListContainer{
+width:950px;
+margin: 0 auto;
+overflow:hidden;
+position:relative;
+z-index: 4;}
+
+.coachesList{
+list-style:none;
+padding:0px;
+padding-bottom: 20px;
+overflow: hidden;
+position:relative;
+width:800px;
+margin:0 auto;
+}
+
+.coachesList li{position:relative; padding-left:50px; overflow:hidden; width:350px; border-bottom: solid 1px #acacac; padding-bottom: 15px; padding-top: 15px; float:left;}
+
+.shadow{box-shadow:inset 0px 0px 2px 2px #acacac; height:100px; border: solid 5px #d8d8d8; border-radius: 120px; width:100px; float:left;}
+
+.shadow a{display:block;}
+
+.coachesList img{ z-index:-1; border-radius: 120px; width:100px; height:100px; position: relative;}
+
+.coachName{width:230px;  color:#00106e; font-size: 18px; padding-top:30px; float:left; }
+
+.coachName p{text-align:center; margin:3px; }
+
+.pos{color:orange; font-size: 15px; }
+
+#playerTable{width:950px}
+
+#playerTable a {color:#000; font-weight:bold;}
+
+#playerTable a:hover{color:gray;}
+
+#playerTable thead{background:#222222;}
+
+#playerTable th{height:30px; text-align: left; color:#fff;}
+
+#playerTable tr{ height:25px;}
+
+#playerTable td{font-weight:normal; }
+
+.even{background:#acacac;}
+
+/*CONTACT PAGE*/
+
+.contactContainer{width:950px; margin:0 auto; overflow:hidden; position:relative;}
+
+.contactContainer div{float:left; width:474px;}
+
+.contactForm{
+float:left;
+border-right: solid 1px #acacac;}
+
+.contactForm input{
+width:400px;
+height:25px;
+}
+
+.contactForm textarea{
+min-width:400px;
+min-height:150px;    
+max-width:400px;
+max-height:150px;
+}
+
+.contactForm{float:left;}
+
+.contactForm ul{list-style: none; padding:0px;}
+
+.contactForm ul li{ margin:10px 0px; }
+
+.contactInfo ul{  padding-left:50px; list-style:none;}
+
+.contactInfo ul li{width:100%; height:160px;  font-weight:bold; color:orange; font-size:20px; text-align: center;}
+
+.social{height:75px; padding-left:80px;}
+
+.social img{width:50px; height: 50px; float:left; margin:0px 20px;}
+
+.social img:hover{cursor: pointer;}
+
+#facebook{background:url(img/socialNet.png) 0 0px;}
+
+#youTube{background:url(img/socialNet.png) 0 -51px;}
+
+#twitter{background:url(img/socialNet.png) 0 -103px;}
+
+#facebook:hover{background:url(img/socialNet.png) -50px 0px;}
+
+#youTube:hover{background:url(img/socialNet.png) -51px -51px;}
+
+#twitter:hover{background:url(img/socialNet.png) -50px -103px;}
+
+.contactTitle{border-bottom:solid 1px #acacac; color:#00106e; display:block;  width:250px; margin-left:100px; text-align: center;}
