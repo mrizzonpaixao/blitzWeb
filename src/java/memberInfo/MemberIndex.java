@@ -15,8 +15,11 @@ import java.util.ArrayList;
  */
 public class MemberIndex {
     
-    private ArrayList<member> memberArrayList = new ArrayList<>();    
-    private member Member;
+    private ArrayList<Member> PlayerList = new ArrayList<>();
+    private ArrayList<Member> RecruitList = new ArrayList<>();
+    private ArrayList<Member> CoachList = new ArrayList<>();
+    private ArrayList<Member> CommitteeList = new ArrayList<>();
+    private Member Member;
     private DbCon dbCon = new DbCon();
     
     
@@ -27,7 +30,7 @@ public class MemberIndex {
         
         try {
                 while (rs.next()) {
-                    this.Member = new member(
+                    this.Member = new Member(
                           Integer.parseInt(rs.getString(1)),
                           rs.getString(2),
                           rs.getString(3), 
@@ -35,11 +38,11 @@ public class MemberIndex {
                           rs.getString(5),
                           rs.getString(6),  
                           rs.getString(7),
-                          rs.getString(8),
-                          rs.getString(9),
-                          rs.getString(10) );       
+                           rs.getString(8), 
+                         dbCon.getPosAsString(rs.getString(9))
+                           );       
                     
-                   if(!rs.getString(2).equals("coach")){                    
+                   if(!rs.getString(2).equals("1")||!rs.getString(2).equals("2")){                    
                    this.Member.setFees(dbCon.getMemberFees(rs.getString(1)));
                    this.Member.setStats(dbCon.getMemberStats(rs.getString(1)));
                    this.Member.setLet(dbCon.getMemberLet(rs.getString(1)));
@@ -47,8 +50,23 @@ public class MemberIndex {
                    
                    this.Member.setInbox(dbCon.getAllInboxMessages(rs.getString(1)));
                    this.Member.setSent(dbCon.getAllSentMessages(rs.getString(1)));
-                   this.memberArrayList.add(this.Member);
                    
+                  
+       
+                    switch (rs.getString(2)) {
+                        case "1":this.RecruitList.add(Member); ;
+                                 break;
+                        case "2":  this.CoachList.add(Member);
+                                 break;
+                        case "3": this.CommitteeList.add(Member);
+                                  this.PlayerList.add(Member);
+                                 break;
+                        case "4": this.PlayerList.add(Member);
+                                 break;
+                        default: ;
+                                 break;
+                    }
+                          
                 }
             }
             catch (SQLException e) {
@@ -56,8 +74,22 @@ public class MemberIndex {
             }
         }
 
-    public ArrayList<member> getMemberList() {
-        return this.memberArrayList;
+    public ArrayList<Member> getPlayerList() {
+        return PlayerList;
     }
+
+    public ArrayList<Member> getRecruitList() {
+        return RecruitList;
+    }
+
+    public ArrayList<Member> getCoachList() {
+        return CoachList;
+    }
+
+    public ArrayList<Member> getCommitteeList() {
+        return CommitteeList;
+    }
+
+    
     
 }

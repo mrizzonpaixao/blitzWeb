@@ -471,3 +471,5 @@ max-height:150px;
 #twitter:hover{background:url(img/socialNet.png) -50px -103px;}
 
 .contactTitle{border-bottom:solid 1px #acacac; color:#00106e; display:block;  width:250px; margin-left:100px; text-align: center;}
+
+#feedback{width:600px; z-index:0; height:0px; margin:4px auto; background:#dbdbdb; color:red; font-weight: bold; text-align: center; display:none; padding-top: 10px; border-radius: 5px; }

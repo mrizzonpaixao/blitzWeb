@@ -17,7 +17,6 @@
 <html>
     <% 
      DbCon dbCon = new DbCon();
-     dbCon.dbConnect();
      ArrayList<NewsArticle> News;
      ArrayList<Fixture> Fixtures;
      ArrayList<Slide> SlideShow;

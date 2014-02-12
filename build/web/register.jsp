@@ -54,8 +54,17 @@
                 </div>
             </div>
 	</header>
-	
+	 <p id="feedback" >${feedBack}</p>
+         <script>
+       if($("#feedback").text() === 'Unable to compleat registration, please try again'||$("#feedback").text() ==='Sorry, email alredy registerd\n\
+ with an existing account')
+              {$("#feedback").show();
+              $("#feedback").animate({height: "25px" });}
+                      
+         </script>
+         
 	<div id="main">
+           
             <div class="regContainer">
                 
                 <form id="registerForm" method="POST" action="Register">
@@ -65,33 +74,23 @@
                         <li>
                             <label for="firstName">First Name:</label>
                             <br/>
-                            <input type="text" name="firstName" placeholder="Andy" required>
+                            <input style="width:160px" type="text" name="firstName" value="${firstName}" placeholder="Andy" required>
                         </li>
                          <li>
                             <label for="surname">Surname:</label>
                             <br/>
-                            <input type="text" name="surname" placeholder="Dalton" required>
+                            <input style="width:160px" type="text" name="surname" value="${surname}" placeholder="Dalton" required>
                         </li>
-                        <li>
-                         <label for="role">Role:</label>
-                         <br/>
-                        <select>
-                        <option value="">Please Select one</option>
-                        <option value="volvo">Coach</option>
-                        <option value="saab">Recruit</option>
-                        
-                       </select>
-                        
-                        </li>
+                       
                          <li>
                             <label for="mail">Email:</label>
                             <br/>
-                            <input type="email" name="mail" placeholder="yourname@email.com" required>
+                            <input type="email" name="mail" value="${email}" placeholder="yourname@email.com" required>
                         </li>
                         <li>
                             <label for="contactNum">Contact Number:</label>
                             <br/>                            
-                            <input type="text" pattern="^\s*\(?(020[7,8]{1}\)?[ ]?[1-9]{1}[0-9{2}[ ]?[0-9]{4})|(0[1-8]{1}[0-9]{3}\)?[ ]?[1-9]{1}[0-9]{2}[ ]?[0-9]{3})\s*$" name="contactNum" placeholder="07933245634" required>
+                            <input style="width:150px" value="${number}" type="text" pattern="^\s*\(?(020[7,8]{1}\)?[ ]?[1-9]{1}[0-9{2}[ ]?[0-9]{4})|(0[1-8]{1}[0-9]{3}\)?[ ]?[1-9]{1}[0-9]{2}[ ]?[0-9]{3})\s*$" name="contactNum" placeholder="07933245634" required>
                         </li>
                         <li>
                             <label for="password">Password:</label>

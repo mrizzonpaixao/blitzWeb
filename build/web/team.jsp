@@ -4,6 +4,11 @@
     Author     : matheus
 --%>
 
+<%@page import="memberInfo.Stats"%>
+<%@page import="memberInfo.Member"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="memberInfo.MemberIndex"%>
+<%@page import="DBCon.DbCon"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -19,6 +24,14 @@
 <body>
 
 	<header>
+            <% 
+            DbCon dbCon = new DbCon();
+            MemberIndex members = dbCon.getAllMembers();
+            ArrayList<Member> Players = members.getPlayerList();
+            ArrayList<Member> Coaches = members.getCoachList();
+            Stats stats;
+           
+            %>
 	<div class="navContainer">
 	<img class="logo" src="img/plymouthblitz_logo.png"/>
 		<nav>
@@ -111,7 +124,6 @@
                     <table id="playerTable">
                         <thead>
                             <tr>
-                                <th style="text-align: center;">#</th>
                                 <th style="width:200px;">Name</th>
                                 <th style="width:200px;">Position</th>
                                 <th>RSH YDS</th>
@@ -122,40 +134,22 @@
                                 <th>TCKL</th>
                             </tr>
                         </thead>
+                        <%
+                for (Member m : Players){
+                    stats = m.getStats();
+                %>
                             <tr class="even">
-                                <td style="text-align: center;">23</td>
-                                <td><a href="#">Paixao, Matheus</a></td>
-                                <td>Linebacker</td>
-                                <td>2</td>
-                                <td>3</td>
-                                <td>5</td>
-                                <td>6</td>
-                                <td>66</td>
-                                <td>4</td>
+                                <td><a href="#"><%out.print(m.getFullname());%></a></td>
+                                <td><%out.print(m.getPossition());%></td>
+                                <td><%out.print(stats.getRushYds());%></td>
+                                <td><%out.print(stats.getPasYds());%></td>
+                                <td><%out.print(stats.getRecvYds());%></td>
+                                <td><%out.print(stats.getTds());%></td>
+                                <td><%out.print(stats.getScks());%></td>
+                                <td><%out.print(stats.getTckls());%></td>
                             </tr>
-                            <tr class="odd">
-                                 <td style="text-align: center;">23</td>
-                                <td>Paixao, Matheus</td>
-                                <td>Linebacker</td>
-                                <td>2</td>
-                                <td>3</td>
-                                <td>5</td>
-                                <td>6</td>
-                                <td>66</td>
-                                <td>4</td>
-                            </tr>
-                            <tr class="even">
-                                 <td style="text-align: center;">23</td>
-                                <td>Paixao, Matheus</td>
-                                <td>Linebacker</td>
-                                <td>2</td>
-                                <td>3</td>
-                                <td>5</td>
-                                <td>6</td>
-                                <td>66</td>
-                                <td>4</td>
-                            </tr>
-                    </table>
+                    <%}%>        
+                        </table>
                 </div>
                  
             </div>

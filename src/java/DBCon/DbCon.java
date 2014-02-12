@@ -22,6 +22,7 @@ import Equipament.Helmet;
 import Equipament.ShoulderPad;
 import java.util.ArrayList;
 import memberInfo.Fees;
+import memberInfo.Member;
 import memberInfo.MemberIndex;
 import memberInfo.Message;
 import memberInfo.Stats;
@@ -52,9 +53,10 @@ public class DbCon {
 
     public DbCon() {
         this.home = new Home();
+        dbConnect();
     }
     
-    public void dbConnect(){
+    private void dbConnect(){
     try {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
              conn = DriverManager.getConnection
@@ -80,13 +82,14 @@ public class DbCon {
     return home.getNews();
     }
     
-    public Boolean addMember( String firstName, String surname,
-            String email){
+    public Boolean addMember(String firstName, String surname, String email, 
+            String ContactNum, String password ){
+    added = true;
     
-        queryString = "INSERT INTO members (first_name, surname, email) VALUES('"+firstName+"','"+surname+"','"+email+"')";
-        
-         System.out.println(queryString);
-        try {
+        queryString = "INSERT INTO members (first_name,surname,email,contact_num,member_password) VALUES('" + firstName +"',"
+                + "'"+ surname +"','"+ email +"','"+ ContactNum +"','"+ password +"')";
+        System.out.println(queryString);
+         try {
             pstmt = conn.prepareStatement(queryString);
             pstmt.executeUpdate();
         } catch (SQLException ex) {
@@ -94,6 +97,12 @@ public class DbCon {
             added = false;
            }        
     return added;
+    }
+    
+    public Boolean checkEmail(String email){
+        Boolean emailFound=false;
+    
+    return emailFound;
     }
     
     public ArrayList<Fixture> getAllFixtures() throws SQLException{
@@ -133,7 +142,7 @@ public class DbCon {
     
     public MemberIndex getAllMembers() throws SQLException {
       
-        queryString = "SELECT * FROM cms_fixtures";
+        queryString = "SELECT * from members";
         pstmt = conn.prepareStatement(queryString);
         rset = pstmt.executeQuery();
         
@@ -142,9 +151,21 @@ public class DbCon {
     return members;
     }
     
+    public String getPosAsString(String id) throws SQLException{
+       queryString = "SELECT pos_description FROM positions where pos_id ='"+ id +"'; ";
+        pstmt = conn.prepareStatement(queryString);
+        rset = pstmt.executeQuery(); 
+        
+        while (rset.next()) {
+        return rset.getString(1);
+        }
+        
+        return null;
+    }
+    
     public Stats getMemberStats(String memberID) throws SQLException{
     
-         queryString = "SELECT * FROM cms_fixtures";
+         queryString = "SELECT * FROM stats where member_id ='"+ memberID +"';";
         pstmt = conn.prepareStatement(queryString);
         rset = pstmt.executeQuery();
          
@@ -167,11 +188,11 @@ public class DbCon {
     
     public Fees getMemberFees(String memberID) throws SQLException{
     
-        queryString = "SELECT * FROM cms_fixtures";
+        queryString = "SELECT * FROM fees where member_id='"+ memberID +"';";
         pstmt = conn.prepareStatement(queryString);
         rset = pstmt.executeQuery();
     
-        this.gameDayFees = new int[7];
+        this.gameDayFees = new int[8];
         
         
                 while (rset.next()) {                    
@@ -200,12 +221,12 @@ public class DbCon {
     
     public ArrayList<Message> getAllInboxMessages(String ReciverId) throws SQLException{
         
-     queryString = "SELECT * FROM cms_fixtures";
+     queryString = "SELECT * FROM messages where reciver_id = '"+ ReciverId +"';";
         pstmt = conn.prepareStatement(queryString);
         rset = pstmt.executeQuery();  
         
       if (!rset.isBeforeFirst() ) {  
-            return null;
+            return Inbox;
          }   
         
     while (rset.next()) {
@@ -226,12 +247,12 @@ public class DbCon {
     
     public ArrayList<Message> getAllSentMessages(String memberId) throws SQLException{
         
-     queryString = "SELECT * FROM cms_fixtures";
+     queryString = "SELECT * FROM messages where sender_id = '"+ memberId +"';";
         pstmt = conn.prepareStatement(queryString);
         rset = pstmt.executeQuery();  
         
       if (!rset.isBeforeFirst() ) {  
-            return null;
+            return Sent;
          }   
         
     while (rset.next()) {
@@ -252,7 +273,7 @@ public class DbCon {
 
     public EquipamentLet getMemberLet(String memberId) throws SQLException {
         
-        queryString = "SELECT * FROM cms_fixtures";
+        queryString = "SELECT * FROM equipment_lets where member_id = '"+ memberId +"';";
         pstmt = conn.prepareStatement(queryString);
         rset = pstmt.executeQuery();  
         

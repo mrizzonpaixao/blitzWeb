@@ -21,7 +21,7 @@ public class Fees {
     private String finalDate;
 
     public Fees() {
-        this.gameDayFees = new int[7];
+        this.gameDayFees = new int[8];
         this.fees_id = 0;
         this.member_id = 0;
         this.changedBy = 0;
@@ -32,13 +32,12 @@ public class Fees {
     }
 
     public Fees(int fees_id, int member_id, int changedBy, int teamFee, int leagueFee, int[] gameDayFees, String dateStamp) {
-        this.gameDayFees = new int[7];
+        this.gameDayFees = gameDayFees;
         this.fees_id = fees_id;
         this.member_id = member_id;
         this.changedBy = changedBy;
         this.teamFee = teamFee;
         this.leagueFee = leagueFee;
-        this.gameDayFees = gameDayFees;
         this.dateStamp = editDate(dateStamp);
     }
     

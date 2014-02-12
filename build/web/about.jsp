@@ -21,7 +21,6 @@
 <body>
     <% 
      DbCon dbCon = new DbCon();
-     dbCon.dbConnect();
      AboutUs about =  dbCon.getAboutUsPage();
     %>
 
