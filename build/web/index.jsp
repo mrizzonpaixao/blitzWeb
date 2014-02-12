@@ -4,6 +4,7 @@
     Author     : matheus
 --%>
 
+<%@page import="CMS.Slide"%>
 <%@page import="CMS.fixtureList"%>
 <%@page import="CMS.fixtureList"%>
 <%@page import="CMS.Fixture"%>
@@ -19,10 +20,11 @@
      dbCon.dbConnect();
      ArrayList<NewsArticle> News;
      ArrayList<Fixture> Fixtures;
-         
+     ArrayList<Slide> SlideShow;
+     
      Fixtures = dbCon.getAllFixtures();
      News = dbCon.getAllNews();
-     
+     SlideShow = dbCon.getAllSlides();
      %>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -73,10 +75,12 @@
 	
 	<div id="main">
             <div class="slideshow">
-                <div class="slide"><img  src="img/blitzCover.jpg"/></div>
-                <div class="slide"><img  src="img/blitzCover.jpg"/></div>
-                <div class="slide"><img  src="img/blitzCover.jpg"/></div>
-            </div>
+                <%
+                for (Slide s : SlideShow){
+                %>
+                <div class="slide"><img  src="img/<%out.print(s.getImgSrc());%>"/></div>
+                <% } %>
+           </div>
 	<div class="content">
 	<div id="news">
 	<h2>News</h2>

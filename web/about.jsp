@@ -4,6 +4,8 @@
     Author     : matheus
 --%>
 
+<%@page import="CMS.AboutUs"%>
+<%@page import="DBCon.DbCon"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -17,6 +19,11 @@
 </head>
 
 <body>
+    <% 
+     DbCon dbCon = new DbCon();
+     dbCon.dbConnect();
+     AboutUs about =  dbCon.getAboutUsPage();
+    %>
 
 	<header>
 	<div class="navContainer">
@@ -57,14 +64,11 @@
 	
 	<div id="main">
             <div id="about">
-            <img id="aboutImg" src="img/team.jpg"/>
+            <img id="aboutImg" src="img/<%out.print(about.getImgSrc());%>"/>
             <div id="aboutContent">
                 <p>              
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut 
-                labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco 
-                laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in 
-                voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-        </p>
+                <%out.print( about.getAboutText());%>
+                </p>
         </div>
             </div>
 	</div>

@@ -5,9 +5,11 @@
 package DBCon;
 
 
+import CMS.AboutUs;
 import CMS.Fixture;
 import CMS.Home;
 import CMS.NewsArticle;
+import CMS.Slide;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -46,6 +48,7 @@ public class DbCon {
     private EquipamentLet let;
     private Helmet helmet;
     private ShoulderPad pad;
+    private AboutUs about;
 
     public DbCon() {
         this.home = new Home();
@@ -64,6 +67,7 @@ public class DbCon {
     }
     }
     
+    /*Home page*/
     
     public ArrayList<NewsArticle> getAllNews() throws SQLException{
     
@@ -103,10 +107,28 @@ public class DbCon {
     return home.getFixtures();
     }
     
-    public void endConn() throws SQLException{
+    public ArrayList<Slide> getAllSlides() throws SQLException{
     
-        conn.close();
+        queryString = "SELECT * FROM cms_slideshow;";
+        pstmt = conn.prepareStatement(queryString);
+        rset = pstmt.executeQuery();
+        
+       home.setSlideShow(rset);
     
+    return home.getSlideShow();
+    }
+    
+    /*About us Page*/
+    
+    public AboutUs getAboutUsPage() throws SQLException{
+    
+        queryString = "SELECT * FROM cms_about ORDER BY date_stamp DESC LIMIT 1 ";
+        pstmt = conn.prepareStatement(queryString);
+        rset = pstmt.executeQuery();
+        
+       about = new AboutUs(rset);
+    
+    return about;
     }
     
     public MemberIndex getAllMembers() throws SQLException {
@@ -283,6 +305,12 @@ public class DbCon {
          }
     
     return pad;
+    }
+     
+     public void endConn() throws SQLException{
+    
+        conn.close();
+    
     }
     
 }

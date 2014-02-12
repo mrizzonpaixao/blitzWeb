@@ -58,7 +58,7 @@
 	<div id="main">
             <div class="regContainer">
                 
-                <form>
+                <form id="registerForm" method="POST" action="Register">
                     
                     <legend>Register</legend>
                    <ul>
@@ -110,6 +110,9 @@
                    </ul>    
                     
                 </form>
+                
+                
+                
                 </div>
 	</div>
       
