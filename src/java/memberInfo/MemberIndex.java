@@ -15,11 +15,11 @@ import java.util.ArrayList;
  */
 public class MemberIndex {
     
-    private ArrayList<Member> PlayerList = new ArrayList<>();
-    private ArrayList<Member> RecruitList = new ArrayList<>();
-    private ArrayList<Member> CoachList = new ArrayList<>();
-    private ArrayList<Member> CommitteeList = new ArrayList<>();
-    private Member Member;
+    private ArrayList<member> PlayerList = new ArrayList<>();
+    private ArrayList<member> RecruitList = new ArrayList<>();
+    private ArrayList<member> CoachList = new ArrayList<>();
+    private ArrayList<member> CommitteeList = new ArrayList<>();
+    private member Member;
     private DbCon dbCon = new DbCon();
     
     
@@ -30,7 +30,7 @@ public class MemberIndex {
         
         try {
                 while (rs.next()) {
-                    this.Member = new Member(
+                    this.Member = new member(
                           Integer.parseInt(rs.getString(1)),
                           rs.getString(2),
                           rs.getString(3), 
@@ -48,8 +48,8 @@ public class MemberIndex {
                    this.Member.setLet(dbCon.getMemberLet(rs.getString(1)));
                    }
                    
-//                   this.Member.setInbox(dbCon.getAllInboxMessages(rs.getString(1)));
-//                   this.Member.setSent(dbCon.getAllSentMessages(rs.getString(1)));
+//                   this.member.setInbox(dbCon.getAllInboxMessages(rs.getString(1)));
+//                   this.member.setSent(dbCon.getAllSentMessages(rs.getString(1)));
                    
                   
        
@@ -74,19 +74,19 @@ public class MemberIndex {
             }
         }
 
-    public ArrayList<Member> getPlayerList() {
+    public ArrayList<member> getPlayerList() {
         return PlayerList;
     }
 
-    public ArrayList<Member> getRecruitList() {
+    public ArrayList<member> getRecruitList() {
         return RecruitList;
     }
 
-    public ArrayList<Member> getCoachList() {
+    public ArrayList<member> getCoachList() {
         return CoachList;
     }
 
-    public ArrayList<Member> getCommitteeList() {
+    public ArrayList<member> getCommitteeList() {
         return CommitteeList;
     }
 

@@ -13,7 +13,7 @@ import java.util.ArrayList;
  */
 public class member {
     
-    private int member_id;
+    private int memberId;
     private String role;
     private String firstName;
     private String surname;
@@ -32,7 +32,7 @@ public class member {
 
     public member() {
         
-        this.member_id = 0;
+        this.memberId = 0;
         this.role = "";
         this.firstName = "";
         this.surname = "";
@@ -48,9 +48,9 @@ public class member {
 
     public member(int member_id, String role, String firstName, String surname,
             String email, String contactNumber, String description, 
-            String imgSrc, String jerseyNumber, String possition) {
+            String imgSrc, String possition) {
         
-        this.member_id = member_id;
+        this.memberId = member_id;
         this.role = role;
         this.firstName = firstName;
         this.surname = surname;        
@@ -59,7 +59,6 @@ public class member {
         this.contactNumber = contactNumber;
         this.description = description;
         this.imgSrc = imgSrc;
-        this.jerseyNumber = jerseyNumber;
         this.possition = possition;
     }
 
@@ -73,13 +72,13 @@ public class member {
 
     
     private String setFullname(String firstName, String surname) {
-        this.fullname = surname +"," + firstName;
+        this.fullname = surname.toUpperCase() +", " + firstName.toUpperCase();
         
         return this.fullname;
     }
 
     public void setMember_id(int member_id) {
-        this.member_id = member_id;
+        this.memberId = member_id;
     }
 
     public void setRole(String role) {
@@ -135,7 +134,7 @@ public class member {
     }
 
     public int getMember_id() {
-        return member_id;
+        return memberId;
     }
 
     public String getRole() {

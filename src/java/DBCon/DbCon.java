@@ -22,7 +22,7 @@ import Equipament.Helmet;
 import Equipament.ShoulderPad;
 import java.util.ArrayList;
 import memberInfo.Fees;
-import memberInfo.Member;
+import memberInfo.member;
 import memberInfo.MemberIndex;
 import memberInfo.Message;
 import memberInfo.Stats;
