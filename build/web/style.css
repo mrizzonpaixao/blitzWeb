@@ -473,3 +473,13 @@ max-height:150px;
 .contactTitle{border-bottom:solid 1px #acacac; color:#00106e; display:block;  width:250px; margin-left:100px; text-align: center;}
 
 #feedback{width:600px; z-index:0; height:0px; margin:4px auto; background:#dbdbdb; color:red; font-weight: bold; text-align: center; display:none; padding-top: 10px; border-radius: 5px; }
+
+.searchBox{width:360px;
+           height:28px;
+           float:right;
+           margin:5px;
+           
+           font-size: 18px;
+           background-image: url(img/searchIcon.png);
+           background-position: right ;
+           background-repeat: no-repeat;}

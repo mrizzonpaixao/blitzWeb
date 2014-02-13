@@ -48,8 +48,8 @@ public class MemberIndex {
                    this.Member.setLet(dbCon.getMemberLet(rs.getString(1)));
                    }
                    
-                   this.Member.setInbox(dbCon.getAllInboxMessages(rs.getString(1)));
-                   this.Member.setSent(dbCon.getAllSentMessages(rs.getString(1)));
+//                   this.Member.setInbox(dbCon.getAllInboxMessages(rs.getString(1)));
+//                   this.Member.setSent(dbCon.getAllSentMessages(rs.getString(1)));
                    
                   
        

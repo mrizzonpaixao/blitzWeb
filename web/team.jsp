@@ -120,6 +120,7 @@
             </ul>
                 <div class="playersContainer">
                      <h2>Players</h2>
+                     <input type="text" class="searchBox" placeholder="Search">
                      
                     <table id="playerTable">
                         <thead>
@@ -135,10 +136,14 @@
                             </tr>
                         </thead>
                         <%
+            int cnt = 0;
+            String temp = "even";
+            
                 for (Member m : Players){
                     stats = m.getStats();
+                    if(cnt==0){temp = "odd";}else{temp = "even";}
                 %>
-                            <tr class="even">
+                            <tr class="<%out.print(temp);%> rows">
                                 <td><a href="#"><%out.print(m.getFullname());%></a></td>
                                 <td><%out.print(m.getPossition());%></td>
                                 <td><%out.print(stats.getRushYds());%></td>
@@ -148,8 +153,26 @@
                                 <td><%out.print(stats.getScks());%></td>
                                 <td><%out.print(stats.getTckls());%></td>
                             </tr>
-                    <%}%>        
+                    <%++cnt;}
+                    if(cnt==1){cnt=0;}
+                    %>        
                         </table>
+                        <script>
+                         
+                         var $rows = $('.rows');
+                        $('.searchBox').keyup(function() {
+
+                            var val = '^(?=.*\\b' + $.trim($(this).val()).split(/\s+/).join('\\b)(?=.*\\b') + ').*$',
+                                reg = RegExp(val, 'i'),
+                                text;
+
+                            $rows.show().filter(function() {
+                                text = $(this).text().replace(/\s+/g, ' ');
+                                return !reg.test(text);
+                            }).hide();
+                        });
+                         
+                     </script>
                 </div>
                  
             </div>

@@ -56,7 +56,7 @@
 	</header>
 	 <p id="feedback" >${feedBack}</p>
          <script>
-       if($("#feedback").text() === 'Unable to compleat registration, please try again'||$("#feedback").text() ==='Sorry, email alredy registerd\n\
+       if($("#feedback").text() === 'Unable to complete registration, please try again'||$("#feedback").text() ==='Sorry, email alredy registerd\n\
  with an existing account')
               {$("#feedback").show();
               $("#feedback").animate({height: "25px" });}
