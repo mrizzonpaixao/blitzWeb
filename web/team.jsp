@@ -5,7 +5,7 @@
 --%>
 
 <%@page import="memberInfo.Stats"%>
-<%@page import="memberInfo.Member"%>
+<%@page import="memberInfo.member"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="memberInfo.MemberIndex"%>
 <%@page import="DBCon.DbCon"%>
@@ -27,8 +27,8 @@
             <% 
             DbCon dbCon = new DbCon();
             MemberIndex members = dbCon.getAllMembers();
-            ArrayList<Member> Players = members.getPlayerList();
-            ArrayList<Member> Coaches = members.getCoachList();
+            ArrayList<member> Players = members.getPlayerList();
+            ArrayList<member> Coaches = members.getCoachList();
             Stats stats;
            
             %>
@@ -139,7 +139,7 @@
             int cnt = 0;
             String temp = "even";
             
-                for (Member m : Players){
+                for (member m : Players){
                     stats = m.getStats();
                     if(cnt==0){temp = "odd";}else{temp = "even";}
                 %>
