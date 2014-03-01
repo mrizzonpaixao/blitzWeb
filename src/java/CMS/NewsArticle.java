@@ -11,7 +11,7 @@ package CMS;
 public class NewsArticle {
     
    private int newsID;
-   private int memberID;
+   private String memberName;
    private String content;
    private String dateStamp;
    private String title;
@@ -21,16 +21,16 @@ public class NewsArticle {
     public NewsArticle() {
      
         this.newsID = 0;
-        this.memberID = 0;
+        this.memberName = "";
         this.content = null;
         this.dateStamp = null;
         this.title = null;
         
     }   
 
-    public NewsArticle(int news_id, int member_id, String content, String dateStamp, String title) {
+    public NewsArticle(int news_id, String memberName, String content, String dateStamp, String title) {
         this.newsID = news_id;
-        this.memberID = member_id;
+        this.memberName = memberName;
         this.content = content;
         this.dateStamp = editDate(dateStamp);
         this.title = title;
@@ -53,14 +53,15 @@ public class NewsArticle {
         this.newsID = newsID;
     }
 
-    public int getMemberID() {
-        return memberID;
+    public String getMemberName() {
+        return memberName;
     }
 
-    public void setMemberID(int memberID) {
-        this.memberID = memberID;
+    public void setMemberName(String memberName) {
+        this.memberName = memberName;
     }
 
+   
     public String getContent() {
         return content;
     }

@@ -24,8 +24,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author Matheus
  */
-@WebServlet(name = "Register", urlPatterns = {"/Register"})
-public class Register extends HttpServlet {
+@WebServlet(name = "Login", urlPatterns = {"/Login"})
+public class Login extends HttpServlet {
 
     /**
      * Processes requests for both HTTP
@@ -40,25 +40,12 @@ public class Register extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
-                
         DbCon dbCon = new DbCon();
         
-        String firstName = request.getParameter("firstName");
-        String surname = request.getParameter("surname");
-        String usermail = request.getParameter("mail");
-        String contactNum = request.getParameter("contactNum");
+        String email = request.getParameter("usermail");
         String password = request.getParameter("password");
-        
-        if(dbCon.checkEmail(usermail)){
-         request.setAttribute("feedBack", "Sorry, email alredy registerd with an existing account"); 
-        request.setAttribute("firstName", firstName);
-        request.setAttribute("surname", surname);
-        request.setAttribute("email", usermail);
-        request.setAttribute("number", contactNum);
-        request.getRequestDispatcher("register.jsp").forward(request, response);        
-        }        
-        
-        //hashes password
+     
+         //hashes password
             MessageDigest mdAlgorithm = null;
         try {
             mdAlgorithm = MessageDigest.getInstance("MD5");
@@ -80,33 +67,22 @@ public class Register extends HttpServlet {
                 }
                 hexString.append(x);
             }
-        try {
-            if(dbCon.addMember(firstName, surname, usermail, contactNum,
-                    hexString.toString())){
-             HttpSession session = request.getSession();
-             session.setAttribute("firstTime", "true");
-             session.setAttribute("memberId", dbCon.getMemberId());
-             session.setAttribute("role", dbCon.getMemberRole());
-             
-            response.sendRedirect(response.encodeRedirectURL("home.jsp"));
-                   
+            
+            if(dbCon.checkLogin(email,hexString.toString())){
+                
+                 HttpSession session = request.getSession();
+                 
+                session.setAttribute("memberId", dbCon.getMemberId());
+                session.setAttribute("role", dbCon.getMemberRole());
+                
+              response.sendRedirect(response.encodeRedirectURL("home.jsp"));
+            
             }else{
-            request.setAttribute("feedBack", "Unable to complete registration, please try again"); 
-            request.setAttribute("firstName", firstName);
-            request.setAttribute("surname", surname);
-            request.setAttribute("email", usermail);
-            request.setAttribute("number", contactNum);
-            request.setAttribute("fail", "fail");
-            request.getRequestDispatcher("register.jsp").forward(request, response);
+             request.setAttribute("error", "Incorrect email or password");
+             request.setAttribute("email", email);
+             request.setAttribute("psw", password);
+             request.getRequestDispatcher("index.jsp").forward(request, response);
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(Register.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        
-    
-        
-        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -125,7 +101,7 @@ public class Register extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(Register.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -144,7 +120,7 @@ public class Register extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(Register.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

@@ -4,6 +4,9 @@
     Author     : matheus
 --%>
 
+<%@page import="CMS.Global"%>
+<%@page import="CMS.ContactUs"%>
+<%@page import="DBCon.DbCon"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -17,44 +20,13 @@
 </head>
 
 <body>
+   
 
-	<header>
-	<div class="navContainer">
-	<img class="logo" src="img/plymouthblitz_logo.png"/>
-		<nav>
-			<ul>
-                                <li class="inactive"><a href="index.jsp">HOME</a><div class="navBG" ><img class="bgarrow" src="img/bgarrow.png"/></div></li>
-				<li class="inactive"><a href="about.jsp">ABOUT US</a> <div class="navBG " ><img class="bgarrow" src="img/bgarrow.png"/></div></li>
-				<li class="inactive"><a href="team.jsp">THE TEAM</a> <div class="navBG" ><img class="bgarrow" src="img/bgarrow.png"/></div></li>
-				<li class="active"><a href="contact.jsp">CONTACT US</a> <div class="navBG active" ><img class="bgarrow" src="img/bgarrow.png"/></div></li>
-			</ul>
-		</nav>
-		</div>
-            <div class="logReg"> <a class="log btn">Login</a> <a class="reg btn" href="register.jsp">Register</a> </div>
-            <div class="bubble">
-                <img src="img/pointLog.png" />
-                <div class="bubbleContent">                
-                <form>
-                   <ul>
-                        <li>
-                            <label for="usermail">Email:</label>
-                            <br/>
-                            <input type="email" name="usermail" placeholder="yourname@email.com">
-                        </li>
-                        <li>
-                            <label for="password">Password:</label>
-                            <br/>
-                            <input type="password" name="password" placeholder="Password"></li>
-                         <li>
-                        <button type="submit">Login</button> 
-                        </li>
-                   </ul>    
-                    
-                </form>
-                </div>
-            </div>
-	</header>
-	
+	<%@ include file="header.jsp" %>
+	<%
+      ContactUs contact = dbCon.getContactUsPage();
+      
+    %>
 	<div id="main">
             <div class="contactContainer">
                 
@@ -84,20 +56,20 @@
                         <li>
                             <span class="contactTitle">POSTAL ​ADDRESS</span>
                             </br>
-                           UPSU Drakes Circus
+                           <%out.print(contact.getPostFirstLine());%>
                            </br>
-                            Plymouth
+                            <%out.print(contact.getPostCity());%>
                             </br>
-                            PL4 8AA 
+                            <%out.print(contact.getPostPostCode());%> 
                         </li>
                         <li>
                             <span class="contactTitle">PITCH ADDRESS</span>
                             </br>
-                            144 Staddiscombe Rd
+                            <%out.print(contact.getGameFirstLine());%>
                             </br>
-                            Plymouth
+                            <%out.print(contact.getGameCity());%>
                             </br>
-                            PL9 9LT
+                            <%out.print(contact.getGamePostCode());%>
                         </li>
                         <li class="social">
                             
@@ -114,7 +86,7 @@
       
     
 
-    <div class="footer"><div class="footEmail"><img src="img/mail.png"/>plymouthblitz@team.com</div>  <div class="copyright">© Plymouth Blitz. 2014</div></div>
+      <%@ include file="footer.jsp" %> 
   
 </body>
 

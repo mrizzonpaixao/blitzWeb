@@ -15,6 +15,8 @@ h2, h3, h1{color:#00106e;}
 a{
 text-decoration: none;}
 
+ul{list-style: none;}
+
 legend{
 font-size:20px;
 color:#00106e;
@@ -282,16 +284,13 @@ padding-bottom:5px !important;}
 font-size:15px;
 position:relative;
 height:250px;
+width:100%;
 overflow:auto;
-padding-bottom:40px;
 }
 
-#news img{
-position:absolute;
-bottom:0px;
-left:0px;
-z-index:5;}
+#news form{width:100%; }
 
+#news article{ border-bottom:solid 2px #E8E8E8;}
 .newsCont h3{
 font-size:18px;
 color:#00106e;}
@@ -477,8 +476,10 @@ max-height:150px;
 .searchBox{width:360px;
            height:28px;
            float:right;
-           margin:5px;
-           font-size: 18px;
+           margin-top: 27px;
+           font-size: 15px;
            background-image: url(img/searchIcon.png);
            background-position: right ;
            background-repeat: no-repeat;}
+
+#loginFeedback{margin:0px 45px; margin-top:10px; padding:0px; font-weight:bold; color:red;}

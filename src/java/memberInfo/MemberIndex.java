@@ -19,7 +19,7 @@ public class MemberIndex {
     private ArrayList<member> RecruitList = new ArrayList<>();
     private ArrayList<member> CoachList = new ArrayList<>();
     private ArrayList<member> CommitteeList = new ArrayList<>();
-    private member Member;
+    private member member;
     private DbCon dbCon = new DbCon();
     
     
@@ -30,7 +30,7 @@ public class MemberIndex {
         
         try {
                 while (rs.next()) {
-                    this.Member = new member(
+                    this.member = new member(
                           Integer.parseInt(rs.getString(1)),
                           rs.getString(2),
                           rs.getString(3), 
@@ -43,25 +43,25 @@ public class MemberIndex {
                            );       
                     
                    if(!rs.getString(2).equals("1")||!rs.getString(2).equals("2")){                    
-                   this.Member.setFees(dbCon.getMemberFees(rs.getString(1)));
-                   this.Member.setStats(dbCon.getMemberStats(rs.getString(1)));
-                   this.Member.setLet(dbCon.getMemberLet(rs.getString(1)));
+                   this.member.setFees(dbCon.getMemberFees(rs.getString(1)));
+                   this.member.setStats(dbCon.getMemberStats(rs.getString(1)));
+                   this.member.setLet(dbCon.getMemberLet(rs.getString(1)));
                    }
                    
-//                   this.member.setInbox(dbCon.getAllInboxMessages(rs.getString(1)));
-//                   this.member.setSent(dbCon.getAllSentMessages(rs.getString(1)));
+                   this.member.setInbox(dbCon.getAllInboxMessages(rs.getString(1)));
+                   this.member.setSent(dbCon.getAllSentMessages(rs.getString(1)));
                    
                   
        
                     switch (rs.getString(2)) {
-                        case "1":this.RecruitList.add(Member); ;
+                        case "1":this.RecruitList.add(member); ;
                                  break;
-                        case "2":  this.CoachList.add(Member);
+                        case "2":  this.CoachList.add(member);
                                  break;
-                        case "3": this.CommitteeList.add(Member);
-                                  this.PlayerList.add(Member);
+                        case "3": this.CommitteeList.add(member);
+                                  this.PlayerList.add(member);
                                  break;
-                        case "4": this.PlayerList.add(Member);
+                        case "4": this.PlayerList.add(member);
                                  break;
                         default: ;
                                  break;

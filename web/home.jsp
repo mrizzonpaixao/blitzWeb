@@ -9,12 +9,19 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <script src='jQuery.js'></script>
+        <link href="backendCss.css" rel="stylesheet" type="text/css">
+        <title>Plymouth Blitz</title>
     </head>
     <body>
-        <%if(session.getAttribute("firstTime") == "true"){%>
-         <h1>Your registration was success!</h1>
-       <%}%>
+        <header>
+            <div class="navContainer">
+        <img id="logo" src="img/plymouthblitz_logo.png">
+        </div>
+        </header>
+        <div class="main">
+            <a href="cms.jsp">CMS</a>
+        </div>
        
     </body>
 </html>

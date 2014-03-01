@@ -4,6 +4,8 @@
     Author     : matheus
 --%>
 
+<%@page import="CMS.Global"%>
+<%@page import="DBCon.DbCon"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -17,48 +19,13 @@
 </head>
 
 <body>
-
-	<header>
-	<div class="navContainer">
-	<img class="logo" src="img/plymouthblitz_logo.png"/>
-		<nav>
-			<ul>
-                                <li class="inactive"><a href="index.jsp">HOME</a><div class="navBG" ><img class="bgarrow" src="img/bgarrow.png"/></div></li>
-				<li class="inactive"><a href="about.jsp">ABOUT US</a> <div class="navBG " ><img class="bgarrow" src="img/bgarrow.png"/></div></li>
-				<li class="inactive"><a href="team.jsp">THE TEAM</a> <div class="navBG" ><img class="bgarrow" src="img/bgarrow.png"/></div></li>
-				<li class="inactive"><a href="contact.jsp">CONTACT US</a> <div class="navBG" ><img class="bgarrow" src="img/bgarrow.png"/></div></li>
-			</ul>
-		</nav>
-		</div>
-            <div class="logReg"> <a class="log btn">Login</a> <a class="reg btn" href="register.jsp">Register</a> </div>
-            <div class="bubble">
-                <img src="img/pointLog.png" />
-                <div class="bubbleContent">                
-                <form>
-                   <ul>
-                        <li>
-                            <label for="usermail">Email:</label>
-                            <br/>
-                            <input type="email" name="usermail" placeholder="yourname@email.com">
-                        </li>
-                        <li>
-                            <label for="password">Password:</label>
-                            <br/>
-                            <input type="password" name="password" placeholder="Password"></li>
-                         <li>
-                        <button type="submit">Login</button> 
-                        </li>
-                   </ul>    
-                    
-                </form>
-                </div>
-            </div>
-	</header>
+   	<%@ include file="header.jsp" %>
+        
 	 <p id="feedback" >${feedBack}</p>
          <script>
-       if($("#feedback").text() === 'Unable to complete registration, please try again'||$("#feedback").text() ==='Sorry, email alredy registerd\n\
- with an existing account')
-              {$("#feedback").show();
+       if($("#feedback").text() === 'Unable to complete registration, please try again'||
+               $("#feedback").text() ==='Sorry, email alredy registerd with an existing account'){
+              $("#feedback").show();
               $("#feedback").animate({height: "25px" });}
                       
          </script>
@@ -115,9 +82,7 @@
                 </div>
 	</div>
       
-    
-
-    <div class="footer"><div class="footEmail"><img src="img/mail.png"/>plymouthblitz@team.com</div>  <div class="copyright">© Plymouth Blitz. 2014</div></div>
+      <%@ include file="footer.jsp" %> 
   
 </body>
 

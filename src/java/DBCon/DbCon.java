@@ -6,7 +6,9 @@ package DBCon;
 
 
 import CMS.AboutUs;
+import CMS.ContactUs;
 import CMS.Fixture;
+import CMS.Global;
 import CMS.Home;
 import CMS.NewsArticle;
 import CMS.Slide;
@@ -20,9 +22,9 @@ import java.util.logging.Logger;
 import Equipament.EquipamentLet;
 import Equipament.Helmet;
 import Equipament.ShoulderPad;
+import java.sql.Statement;
 import java.util.ArrayList;
 import memberInfo.Fees;
-import memberInfo.member;
 import memberInfo.MemberIndex;
 import memberInfo.Message;
 import memberInfo.Stats;
@@ -38,7 +40,7 @@ public class DbCon {
     private Connection conn;
     private ResultSet rset;
     private Home home; 
-    private Boolean added = true;
+    private Boolean added;
     private MemberIndex members;
     private Fees fees;
     private Stats stats;
@@ -50,8 +52,15 @@ public class DbCon {
     private Helmet helmet;
     private ShoulderPad pad;
     private AboutUs about;
-
+    private ContactUs contact;
+    private Global global;
+    private String memberRole;
+    private String memberId;
+    private NewsArticle article;
+    private NewsArticle newsArticle;
+            
     public DbCon() {
+        this.added = true;
         this.home = new Home();
         dbConnect();
     }
@@ -61,7 +70,7 @@ public class DbCon {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
              conn = DriverManager.getConnection
                     ("jdbc:mysql://localhost:3306/blitzWeb", "matpx", "onelife23");
-            System.out.println("Connection OK");
+            
         }
         catch (Exception e) {
             System.out.println("Connection fail");
@@ -73,7 +82,12 @@ public class DbCon {
     
     public ArrayList<NewsArticle> getAllNews() throws SQLException{
     
-        queryString = "SELECT * FROM cms_news ORDER BY date_stamp DESC ";
+        queryString = "SELECT cms_news.news_id, members.first_name,"
+                + "members.surname, cms_news.content, cms_news.date_stamp,"
+                + "cms_news.title  FROM blitzweb.cms_news INNER JOIN members"
+                + " on cms_news.member_id = members.member_id"
+                + " ORDER BY cms_news.date_stamp DESC; ";
+        
         pstmt = conn.prepareStatement(queryString);
         rset = pstmt.executeQuery();
         
@@ -82,25 +96,76 @@ public class DbCon {
     return home.getNews();
     }
     
+    public NewsArticle addNewsArticle(String memberId, String content, String title) throws SQLException{
+         String id="";
+         queryString = "INSERT INTO cms_news VALUES(null,"+memberId+",'"+content+"',null,'"+title+"');";
+         pstmt = conn.prepareStatement(queryString);
+         pstmt.executeUpdate();
+         
+         queryString = "select LAST_INSERT_ID() from cms_news";
+         pstmt = conn.prepareStatement(queryString);
+         rset  = pstmt.executeQuery();
+    
+         while (rset.next()) {
+           id = rset.getString(1);
+                             }
+         
+         queryString = "SELECT cms_news.news_id, members.first_name,"
+                + "members.surname, cms_news.content, cms_news.date_stamp,"
+                + "cms_news.title  FROM blitzweb.cms_news INNER JOIN members"
+                + " on cms_news.member_id = members.member_id"
+                + " WHERE news_id="+id+" ; ";
+        
+        pstmt = conn.prepareStatement(queryString);
+        rset = pstmt.executeQuery();
+        
+        while (rset.next()) {
+                
+                String fullName = rset.getString(2) +" "+ rset.getString(3);
+                       this.newsArticle = new NewsArticle(
+                               Integer.parseInt(rset.getString(1)),
+                               fullName,
+                               rset.getString(4),
+                               rset.getString(5),
+                               rset.getString(6)
+                               );
+        }
+    
+    return this.newsArticle;
+    }
+    
     public Boolean addMember(String firstName, String surname, String email, 
-            String ContactNum, String password ){
+            String ContactNum, String password ) throws SQLException{
     added = true;
     
         queryString = "INSERT INTO members (first_name,surname,email,contact_num,member_password) VALUES('" + firstName +"',"
                 + "'"+ surname +"','"+ email +"','"+ ContactNum +"','"+ password +"')";
-        System.out.println(queryString);
-         try {
+        try {
             pstmt = conn.prepareStatement(queryString);
             pstmt.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(DbCon.class.getName()).log(Level.SEVERE, null, ex);
             added = false;
-           }        
+           } 
+        
+        if(!checkLogin(email,password)){
+        added = false;
+        }
+        
     return added;
     }
     
-    public Boolean checkEmail(String email){
+    public Boolean checkEmail(String email) throws SQLException{
         Boolean emailFound=false;
+        
+        queryString = "SELECT COUNT(*) FROM members\n" +
+"WHERE email='"+email+"'";
+        pstmt = conn.prepareStatement(queryString);
+        rset = pstmt.executeQuery();
+        
+        if (rset.isBeforeFirst()) {
+        emailFound=true;
+        }
     
     return emailFound;
     }
@@ -116,15 +181,65 @@ public class DbCon {
     return home.getFixtures();
     }
     
+    public Boolean updateFixture(String date, String team, String homeScore, 
+            String opScore, String memberId, String fixtureID){
+    
+        Boolean update = true;
+        
+        queryString = "update cms_fixtures set gameDate = '"+ date +"', team= "
+                + "'"+ team+"', blitz_score= '"+ homeScore +"', op_score="
+                + " '"+ opScore+"', member_id = "+ memberId +", date_stamp"
+                + " = null where fixture_id= "+fixtureID+";";
+        try {
+            pstmt = conn.prepareStatement(queryString);
+            pstmt.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(DbCon.class.getName()).log(Level.SEVERE, null, ex);
+            update = false;
+        }
+        
+        
+    return update;
+    }
+    
     public ArrayList<Slide> getAllSlides() throws SQLException{
     
-        queryString = "SELECT * FROM cms_slideshow;";
+        queryString = "SELECT * FROM cms_slideshow where active = 0;";
         pstmt = conn.prepareStatement(queryString);
         rset = pstmt.executeQuery();
         
        home.setSlideShow(rset);
     
     return home.getSlideShow();
+    }
+    
+    public String addSlide(String id, String fileName) throws SQLException{
+    String slideId="";
+    
+    queryString = "INSERT INTO cms_slideshow values(Null,"+id+",'"+fileName+"',null,0);";
+    pstmt = conn.prepareStatement(queryString);
+    pstmt.executeUpdate();
+    
+    queryString = "select LAST_INSERT_ID() from cms_slideshow";
+    pstmt = conn.prepareStatement(queryString);
+    rset  = pstmt.executeQuery();
+    
+    while (rset.next()) {
+        return rset.getString(1);
+        }
+            
+    return slideId;
+    };
+    
+    public Boolean removeSlide(String id, String memberId) throws SQLException{
+    
+    Boolean temp = true;
+    
+    queryString = "UPDATE cms_slideshow set date_stamp=null, active = 1, member_id="+memberId+" where slideshow_id = "+id+";";
+    pstmt = conn.prepareStatement(queryString);
+    pstmt.executeUpdate();
+    
+    return temp;
     }
     
     /*About us Page*/
@@ -140,9 +255,32 @@ public class DbCon {
     return about;
     }
     
+    public ContactUs getContactUsPage() throws SQLException{
+    
+        queryString = "SELECT * FROM cms_contact ORDER BY date_stamp DESC LIMIT 1 ";
+        pstmt = conn.prepareStatement(queryString);
+        rset = pstmt.executeQuery();
+        
+       contact = new ContactUs (rset);
+    
+    return contact;
+    }
+    
+    public Global getGlobalElements() throws SQLException{
+    
+        queryString = "SELECT * FROM cms_global ORDER BY date_stamp DESC LIMIT 1 ";
+        pstmt = conn.prepareStatement(queryString);
+        rset = pstmt.executeQuery();
+        
+       global = new Global (rset);
+    
+    return global;
+    }
+    
+    
     public MemberIndex getAllMembers() throws SQLException {
       
-        queryString = "SELECT * from members";
+        queryString = "SELECT * from members ORDER BY surname;";
         pstmt = conn.prepareStatement(queryString);
         rset = pstmt.executeQuery();
         
@@ -221,7 +359,7 @@ public class DbCon {
     
     public ArrayList<Message> getAllInboxMessages(String ReciverId) throws SQLException{
         
-     queryString = "SELECT * FROM messages where reciver_id = '"+ ReciverId +"';";
+     queryString = "SELECT * FROM messages where receiver_id = '"+ ReciverId +"';";
         pstmt = conn.prepareStatement(queryString);
         rset = pstmt.executeQuery();  
         
@@ -333,5 +471,39 @@ public class DbCon {
         conn.close();
     
     }
+
+    public boolean checkLogin(String email, String password) throws SQLException {
+        
+        boolean loginOk = false;
+         queryString = "SELECT member_id , role_id FROM members WHERE email='"+email+""
+                 + "' and member_password='"+password+"';";
+        pstmt = conn.prepareStatement(queryString);
+        rset = pstmt.executeQuery(); 
+        
+        if (!rset.isBeforeFirst() ) {  
+            return loginOk;
+         }else{
+            loginOk = true;
+        }
+        
+        while (rset.next()) {
+        
+            this.memberId = rset.getString(1);
+            this.memberRole = rset.getString(2);  
+                                
+            }        
+        
+        return loginOk;
+    }
+
+    public String getMemberRole() {
+        return memberRole;
+    }
+
+    public String getMemberId() {
+        return memberId;
+    }
+    
+    
     
 }

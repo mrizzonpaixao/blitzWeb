@@ -4,6 +4,7 @@
     Author     : matheus
 --%>
 
+<%@page import="CMS.Global"%>
 <%@page import="CMS.Slide"%>
 <%@page import="CMS.fixtureList"%>
 <%@page import="CMS.fixtureList"%>
@@ -15,16 +16,7 @@
 <!DOCTYPE html>
 
 <html>
-    <% 
-     DbCon dbCon = new DbCon();
-     ArrayList<NewsArticle> News;
-     ArrayList<Fixture> Fixtures;
-     ArrayList<Slide> SlideShow;
-     
-     Fixtures = dbCon.getAllFixtures();
-     News = dbCon.getAllNews();
-     SlideShow = dbCon.getAllSlides();
-     %>
+    
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <script src='jQuery.js'></script>
@@ -35,42 +27,17 @@
 
 <body>
 
-	<header>
-	<div class="navContainer">
-	<img class="logo" src="img/plymouthblitz_logo.png"/>
-		<nav>
-			<ul>
-                                <li class="active"><a href="index.jsp">HOME</a><div class="navBG active" ><img class="bgarrow" src="img/bgarrow.png"/></div></li>
-				<li class="inactive"><a href="about.jsp">ABOUT US</a> <div class="navBG" ><img class="bgarrow" src="img/bgarrow.png"/></div></li>
-				<li class="inactive"><a href="team.jsp">THE TEAM</a> <div class="navBG" ><img class="bgarrow" src="img/bgarrow.png"/></div></li>
-				<li class="inactive"><a href="contact.jsp">CONTACT US</a> <div class="navBG" ><img class="bgarrow" src="img/bgarrow.png"/></div></li>
-			</ul>
-		</nav>
-		</div>
-            <div class="logReg"> <a class="log btn">Login</a> <a class="reg btn" href="register.jsp">Register</a> </div>
-            <div class="bubble">
-                <img src="img/pointLog.png" />
-                <div class="bubbleContent">                
-                <form>
-                   <ul>
-                        <li>
-                            <label for="usermail">Email:</label>
-                            <br/>
-                            <input type="email" name="usermail" placeholder="yourname@email.com">
-                        </li>
-                        <li>
-                            <label for="password">Password:</label>
-                            <br/>
-                            <input type="password" name="password" placeholder="Password"></li>
-                         <li>
-                        <button type="submit">Login</button> 
-                        </li>
-                   </ul>    
-                    
-                </form>
-                </div>
-            </div>
-	</header>
+	 <%@ include file="header.jsp" %>
+         <%      
+     ArrayList<NewsArticle> News;
+     ArrayList<Fixture> Fixtures;
+     ArrayList<Slide> SlideShow;
+    
+     
+     Fixtures = dbCon.getAllFixtures();
+     News = dbCon.getAllNews();
+     SlideShow = dbCon.getAllSlides();
+     %>
 	
 	<div id="main">
             <div class="slideshow">
@@ -83,14 +50,13 @@
 	<div class="content">
 	<div id="news">
 	<h2>News</h2>
-	<img src="img/newsbg.png"/>
 	<div class="newsCont">
         <%
           for (NewsArticle n : News){                
         %>
     <article>
     <h3><% out.print( n.getTitle()); %></h3>                       
-    <p class="newsInfo"><b>Matheus Paixao</b> - <% out.print( n.getDateStamp()); %></p>
+    <p class="newsInfo"><b><% out.print(n.getMemberName()); %></b> - <% out.print( n.getDateStamp()); %></p>
     <p class="newsContent"><% out.print( n.getContent()); %></p>
     </article> 
 	<%
@@ -116,10 +82,9 @@
 	</div>
 	</div>
 	</div>
-      
     
 
-    <div class="footer"><div class="footEmail"><img src="img/mail.png"/>plymouthblitz@team.com</div>  <div class="copyright">© Plymouth Blitz. 2014</div></div>
+  <%@ include file="footer.jsp" %> 
   
 </body>
 

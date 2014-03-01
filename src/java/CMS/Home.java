@@ -4,6 +4,7 @@
  */
 package CMS;
 
+import DBCon.DbCon;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ public class Home {
     private Fixture fixture;
     private Slide slide;
     private NewsArticle newsArticle;
+    private String fullName;
             
     
 
@@ -37,12 +39,14 @@ public class Home {
     public void setNews(ResultSet rs) {
         try {
             while (rs.next()) {
+                
+                fullName = rs.getString(2) +" "+ rs.getString(3);
                        this.newsArticle = new NewsArticle(
                                Integer.parseInt(rs.getString(1)),
-                               Integer.parseInt(rs.getString(2)),
-                               rs.getString(3),
+                               fullName,
                                rs.getString(4),
-                               rs.getString(5)
+                               rs.getString(5),
+                               rs.getString(6)
                                );
                       this.News.add(newsArticle);
                    }

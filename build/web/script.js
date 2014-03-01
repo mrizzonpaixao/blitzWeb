@@ -48,6 +48,22 @@ $(window).bind("load", function () {
         });
         $(this).find("a").css({color: "#000"});
     });
+    
+ 
+    
+//    if($("nav li").each("a").attr('href') === getPageName(document.URL)){
+//        
+//       $("nav li").addClass('active'); 
+//    }
+//        
+//    
+//    function getPageName(url) {
+//    var index = url.lastIndexOf("/") + 1;
+//    var filenameWithExtension = url.substr(index);  
+//    return filenameWithExtension;                                   
+//}
+    
+    
 });
 
 
