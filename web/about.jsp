@@ -27,9 +27,13 @@
 AboutUs about =  dbCon.getAboutUsPage();
 %>
 	<div id="main">
+            
+            
+            
             <div id="about">
             <img id="aboutImg" src="img/<%out.print(about.getImgSrc());%>"/>
             <div id="aboutContent">
+                <h2 style="color:orange;">What we are all about!</h2>
                 <p>              
                 <%out.print( about.getAboutText());%>
                 </p>

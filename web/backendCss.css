@@ -14,6 +14,7 @@ h2, h3, h1{color:#00106e;}
 
 a{
     text-decoration: none;}
+#main{z-index: 200;}
 
 html,body{     
     background: #F0F0F0;
@@ -31,19 +32,42 @@ header{
     height:120px;
     background:#fff;
     box-shadow: 0px 0px 8px gray;
-    z-index:3;
-    overflow:hidden;
+    z-index: 202;
+    overflow:visible ;
 }
 
-.navContainer{width:950px; height:120px; margin:0 auto;}
+.navContainer{width:850px; height:120px; margin:0 auto; padding:0px; overflow: visible;}
+
+.navContainer ul{overflow:visible; height:110px; margin:0px; width:850px;}
+
+.navContainer ul li{float:left; height:20px; width:130px;  text-align:center; margin:0px 10px;
+               padding-top:90px; margin-bottom: 10px;}
+
+.navContainer ul li:hover{border-bottom: solid 4px #00106e;}
+
+.currentLi{border-bottom: solid 4px #00106e;}
+
+.navContainer a{ text-decoration:none; color: #000; font-size:18px; }
+
+.navContainer ul li ul{width:100%; height:123px; position: relative; z-index:6 ;padding:0px; background-color:#fff; margin-top:2px; overflow:hidden; display:none;}
+
+.navContainer ul li ul li{height:22px; padding:4px 0px; margin:0px; border-bottom:solid 1px #dbdbdb;}
+
+.navContainer ul li ul li a{font-size:15px;}
+
+.navContainer ul li ul li:hover{background:#acacac; border-bottom:solid 1px #dbdbdb; cursor: pointer;}
 
 header #logo{height:100px; margin:10px;  float:left;}
 
-#news textarea{width:500px; height:60px;}
+#news textarea{width:460px; height:60px; margin:3px 20px;}
 
-#news input{width:300px; margin:3px 0px;}
+#news input{width:460px; margin:3px 20px;}
 
-#news form button{float: right; }
+#news button{margin-left:20px;}
+
+#news ul{padding:0px; margin:0px; margin-bottom:20px;}
+
+.addNewsContent{display:none;}
 
 #news ul{padding:0px;}
 
@@ -140,3 +164,271 @@ display: none;}
  .newsDelete{ font-size:12px; color:#00106e;  }
  
  .newsDelete:hover{color:#222222;}
+ 
+ #aboutContent:hover{cursor: pointer;}
+ 
+ #about:hover{cursor: pointer;}
+ 
+ #aboutContent p{padding:5px;}
+ 
+  .aboutContent:hover{background:#ffffcc; color:black;}
+  
+  .aboutImgEdit{left:150px;}
+  
+  #aboutImgUploader{width:300px;
+    height:400px;
+    background:#acacac;
+    position:absolute;
+    top:30px;
+    left:300px;
+    z-index:10;
+    border-radius:15px;
+    opacity:.98;
+    overflow:hidden;
+     padding:25px 50px;
+     display:none;
+}
+
+.editContactInfo{
+    width:500px;
+    margin:0 auto;
+   }
+ .editContactInfo p{margin:5px; width:250px; margin-left:100px;}  
+ 
+  .editContactInfo p:hover{ background:#80C8E5;
+   cursor:pointer; color:#000; background-image: url('img/editIcon.png'); 
+   background-position:right;  background-repeat:no-repeat;}
+ 
+  .footerBackend{ border-top:solid 1px #00106e; height:20px; width:90%;margin: 0 auto;}
+  
+  .leftspeechBubble{position:relative; width:500px; overflow: visible; float:right;}
+  
+  .leftspeechPoint{position: absolute; top:30px; left:-80px; }
+  
+  .leftdashPost{width:800px; position: relative; min-height:150px; overflow: hidden; float:left; margin:20px 0px;}
+  
+  .leftpostContent{float: left; width:300px; height:200px;}
+  
+  .leftspeechPic{width:140px; height:140px; border-radius: 100px; margin-left:85px;}
+  
+  .rightspeechBubble{position:relative; width:500px; overflow: visible; float:left;}
+  
+  .rightspeechPoint{position: absolute; top:30px; right:-80px; }
+  
+  .speechBubbleContent{padding:18px;  overflow: hidden; width:460px; background:#fff; min-height:100px; border-radius: 
+  20px;}
+  
+  .rightdashPost{width:800px; float:right; position: relative; min-height:160px; overflow: hidden; margin:20px 0px;}
+  
+  .rightpostContent{float: right; width:300px; height:100px;}
+  
+  .rightspeechPic{width:140px; height:140px; border-radius: 100px; margin-left:75px;}
+  
+   .speechBubbleContent{
+       padding:18px;
+       padding-bottom: 40px;
+       position: relative;
+       overflow:hidden;
+       width:460px;
+       background:#fff;
+       min-height:100px;
+       border-radius:20px;
+       line-height:22px; }
+   
+.binIcon{background:url(img/binIcon.png) 0 0px; width:30px; height:40px; position: absolute; bottom:4px; right:6px;}
+
+.binIcon:hover{cursor: pointer; background:url(img/binIcon.png) 89px 0px;}
+   
+.speechBubbleContent p{margin:0px; color:#acacac; font-size:17px; position: absolute; bottom:4px; left:20px;}
+  
+  .dashTextarea{max-width:500px; min-width:500px; height:30px; min-height:30px;
+                max-height:90px; font-size:20px; padding:10px; border-radius:15px; border:none}
+  
+  .postBtn{float:none;}
+  
+  .postContent{width:530px;  padding:20px 130px; min-height:100px;
+              position: relative; background:#EBEBEB; margin:0 auto; border-bottom: solid 1px #dbdbdb }
+  
+  .postContainer{position:relative; overflow: hidden; }
+  
+  .postNameLeft{display: block; font-weight: bold; width:140px; margin-left:85px; text-align: center;}
+  
+  .postNameRight{display: block; font-weight: bold; width:140px; margin-left:75px; text-align: center;}
+  
+  .profileBlocks{overflow:hidden;
+                  border-radius:15px;
+                  background: #fff; 
+                  box-shadow: 0px 0px 6px gray;
+                      padding:20px;float: left;margin:10px 0px; position: relative;}
+  .detail{width:910px; }
+  .equip{margin-right:20px; width:425px;height:300px;}
+  .fees{width:425px; height:300px;}
+  #profileMain{ 
+width:950px;
+padding-top:40px;
+padding-bottom:40px;
+margin:0px auto;
+z-index:1;
+
+}
+
+.profileBlocks h3{margin:0px;}
+.leftspeechBubble{position:relative; width:500px; overflow: visible;  float:right;}
+  
+  .leftspeechPoint{position: absolute; top:30px; left:-80px; }
+  
+  .leftdashPost{width:800px;   position: relative; min-height:150px; overflow: hidden; float:left; margin:20px 0px;}
+  
+  .ProfileleftpostContent{float: left; width:300px; }
+  
+  .ProfileleftpostContent:hover{opacity: .5; cursor: pointer;}
+  
+  .leftspeechPic{width:140px; height:140px; border-radius: 100px; margin-left:85px;}
+  
+  .profilespeechBubbleContent{
+       padding:18px;
+       position: relative;
+       overflow:hidden;
+       width:460px;
+       background:#F0F0F0;
+       min-height:70px;
+       border-radius:20px;
+       line-height:22px; }
+  .statTable{
+     width:490px;
+     padding-top: 25px;
+  }
+  .statTable thead{background:#222222; color:#fff;}
+  
+  .statTable td{text-align: center; padding:5px; background:#F0F0F0;}
+  
+  .topFees{width:170px; height: 20px; padding:15px; margin:30px 5px; float:left; text-align: center; cursor: pointer; }
+ 
+  .gameFees{width:20px; padding:15px; height:20px;float:left;margin:1px; cursor: pointer; text-align: center;}
+  
+  .equipFee{width:155px !important; height: 20px !important; padding:15px 0px !important; margin:0px 135px !important; margin-top:10px !important; text-align: center; cursor: pointer;}
+ 
+  .equip div{width:170px; height: 200px; padding:0px 15px; margin:0px 5px; margin-top:15px;  float:left; cursor: pointer; }
+ 
+  .key a{display: block; float:left; margin:2px;}
+ 
+  #paid{width:18px; height:18px; background: #5C9D5C;}
+ 
+  #unpaid{width:18px; height:18px; background:#FF5C5C;;}
+ 
+  .key{width:100%; height:20px; position: absolute; bottom:5px; left:10px;}
+  
+  .equip div h4{margin-top:0px; text-align: center; }
+  
+  .equip div img{width:100px; margin:0 35px;}
+  
+  .equip div p{text-align: center;}
+  
+  .paid0{ background:#FF5C5C;}
+ 
+  .paid1{background: #5C9D5C; }
+ 
+  .memberlist{width:180px; float:left; margin:5px; min-height:100px;}
+  
+  .memberlist h3{text-align: center; margin-bottom:10px; }
+  
+  .memberlist ul{padding:0px; text-align: center;}
+  
+  .memberlist ul a{color:black;}
+   
+  .memberlist ul li{border-bottom:solid 1px #dbdbdb; padding:5px 0px; overflow: hidden; text-overflow: ellipsis;}
+    
+   .memberlist ul li:hover{background:#80C8E5; cursor: pointer; font-weight: bold;}
+    
+    .memberSearch{width:180px;          
+           font-size: 15px;
+           background-image: url(img/searchIcon.png);
+           background-size: 20px;
+           background-position: right ;
+           background-repeat: no-repeat;}
+    .editMemberDetail{width:300px; height:500px;  border-radius:15px;
+                  background: #fff; 
+                  box-shadow: 0px 0px 6px gray; text-align: center; margin:190px auto; position: relative; overflow: hidden;}
+  
+    .ContEditMemberDetail{width:100%; display:none; height:100%; background:url(img/editBG.png); position:absolute; top:0px; right:0px; z-index:100;}
+    
+    .profileUploader{margin-top:40px !important; width:220px !important; height:150px !important;}
+    .edituploadImg{ width:90px !important;}
+    .editUpArea{height:250px !important;}
+    .profileThumb{height:100px; width:100px; margin: 0px 75px;}
+    .editMemberDetail p{padding:5px; margin:3px;}
+    .editMemberDetail a{padding:5px; }
+    .editMemberDetail p:hover{cursor: pointer; background:#80C8E5;}
+    
+    .statEdit{width:30px; display:none; background:#ffffcc;}
+    
+    .mailMain div{float:left;}
+    
+    .mailNav{width:140px; min-height: 500px; border-right:solid 1px #acacac ;}
+    
+    .mailContent{width:740px; min-height:500px; border-left:solid 1px #fff ; }
+    
+    .mailNav p{margin:5px; padding:5px; padding-left:30px; font-size:18px;}
+    
+    .mailNav p:hover{background:#acacac; cursor: pointer; }
+     
+     .activeMail{background:#acacac;}
+    
+     .Maillist{width:100%; padding:0px;}
+   
+    .Maillist li{width:800px; height:20px; position:relative; max-height:20px; white-space:nowrap;  overflow: hidden; text-overflow: ellipsis; border-bottom:solid 1px #acacac; padding:5px 0px; margin:0px 10px; }
+    
+    .Maillist li img{position:absolute; left:5px; bottom:4px;}
+    
+    #compose{margin-bottom:30px; font-size:15px; }
+     
+    #compose:hover{font-weight: bold; background:none;}
+    
+      .Maillist li:hover{background:#dbdbdb;  cursor:pointer; }
+   
+    .Maillist li a{width:150px ; max-height:20px; margin:0px 20px; margin-left:40px ; display:block; float:left; overflow: hidden; text-overflow: ellipsis; white-space:nowrap;  }
+    
+    .preview{ padding-left:6px;color:#5C5C5C;}
+    
+    .email1{background:url(img/mailRead.png) -18px 0px; width:19px; height:19px;}
+   
+    .email0{background:url(img/mailRead.png) 0px 0px; width:19px; height:19px;}
+    
+    .newMail{width:100%; display:none; height:100%; background:url(img/editBG.png); position:absolute; top:0px; right:0px; z-index:100;}
+    
+    .newMailContainer{width:800px; min-height:380px; padding-top:50px; padding-bottom:50px;  border-radius:15px; margin:140px auto; background: #fff; box-shadow: 0px 0px 6px gray; position: relative; overflow: hidden;}
+    
+    .newMailContainer p{padding:5px; margin:10px 30px; border-bottom:solid 1px #acacac; }
+    
+    .newMailContainer p input{width:200px; border:none; }
+   
+    .newMailContainer p input:focus{outline: none;}
+    
+   .mailTextArea{padding:5px; background:#FDFDFD;  margin:10px 30px; max-width:730px;  min-width:730px; min-height: 270px; }
+   
+    .mailSend{position: absolute; right:20px; }
+   
+    #searchResoults{width:300px; background:#dbdbdb; position: absolute; top:93px; left:50px;}
+    
+    #searchResoults div{position: relative; width:95%; height:70px; margin: 5px; }
+   
+    #searchResoults div p{border-bottom: none; height:15px; font-size:13px; margin:0px; margin-left:75px; padding:5px }
+   
+    #searchResoults div img{height:50px; position: absolute; top:0px; margin:5px; }
+    
+    #searchResoults div:hover{background:#acacac; cursor: pointer;}
+   
+    .contact{padding:5px; padding-left:10px; margin:5px 5px; background:#dbdbdb; border-radius: 15px; }
+    
+    .contact:hover{background:#80C8E5; cursor: pointer;}
+    
+    .delMail{height:15px; margin:0px 5px; margin-bottom: -2px;}
+    
+    .inboxMail{width:100%; height:100%; background:url(img/editBG.png); position:absolute; top:0px; right:0px; z-index:100;}
+    
+    .inboxMail textarea:disabled{background: #fff; color:#000;}
+    
+    .mailReply{position: absolute; right:20px;}
+    
+    .Incontact{padding:3px; margin:5px 5px; background:#dbdbdb; border-radius:15px;}
+   

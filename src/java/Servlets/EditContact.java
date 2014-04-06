@@ -5,11 +5,8 @@
 package Servlets;
 
 import DBCon.DbCon;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,8 +21,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author Matheus
  */
-@WebServlet(name = "Login", urlPatterns = {"/Login"})
-public class Login extends HttpServlet {
+@WebServlet(name = "EditContact", urlPatterns = {"/EditContact"})
+public class EditContact extends HttpServlet {
 
     /**
      * Processes requests for both HTTP
@@ -40,50 +37,31 @@ public class Login extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
-        DbCon dbCon = new DbCon();
+        PrintWriter out = response.getWriter();
         
-        String email = request.getParameter("usermail");
-        String password = request.getParameter("password");
-     
-         //hashes password
-            MessageDigest mdAlgorithm = null;
-        try {
-            mdAlgorithm = MessageDigest.getInstance("MD5");
-        } catch (NoSuchAlgorithmException ex) {
-            Logger.getLogger(Register.class.getName()).log(Level.SEVERE, null, ex);
-        }
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            ObjectOutputStream oos = new ObjectOutputStream(baos);
-            oos.writeObject(password);
-            mdAlgorithm.update(baos.toByteArray());
-            
-            byte[] digest = mdAlgorithm.digest();
-            StringBuilder hexString = new StringBuilder();
-
-            for (int i = 0; i < digest.length; i++) {
-                String x = Integer.toHexString(0xFF & digest[i]);
-                if (x.length() < 2) {
-                    x = "0" + x;
-                }
-                hexString.append(x);
-            }
-            
-            if(dbCon.checkLogin(email,hexString.toString())){
+       HttpSession session = request.getSession();
+       DbCon dbCon = new DbCon();
+       String opId =  request.getParameter("opId");
+       String userId = session.getAttribute("memberId").toString();
+       String firstlinePost =  request.getParameter("firstLinepost");
+       String cityPost =  request.getParameter("cityPost");
+       String postcodePost =  request.getParameter("postcodepost");
+       String firstLinePitch =  request.getParameter("firstLinepitch");
+       String cityPitch =  request.getParameter("citypitch");
+       String postcodePitch =  request.getParameter("postcodepitch");
+       
+       
+       switch (opId) {         
                 
-                 HttpSession session = request.getSession();
-                 
-                session.setAttribute("memberId", dbCon.getMemberId());
-                session.setAttribute("role", dbCon.getMemberRole());
-                session.setAttribute("email", email);
-                
-              response.sendRedirect(response.encodeRedirectURL("home.jsp"));
-            
-            }else{
-             request.setAttribute("error", "Incorrect email or password");
-             request.setAttribute("email", email);
-             request.setAttribute("psw", password);
-             request.getRequestDispatcher("index.jsp").forward(request, response);
-            }
+                case "1":
+                    
+                    dbCon.updateContactInfo(userId,postcodePost,cityPost,
+                            firstlinePost,postcodePitch,firstLinePitch,cityPitch);
+                     response.setContentType("text/plain");  // Set content type of the response so that jQuery knows what it can expect.
+                     response.setCharacterEncoding("UTF-8"); // You want world domination, huh?
+                     response.getWriter().write("Addres updated");
+                    break;
+       }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -102,7 +80,7 @@ public class Login extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(EditContact.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -121,7 +99,7 @@ public class Login extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(EditContact.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

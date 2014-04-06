@@ -11,24 +11,32 @@ package CMS;
 public class Post {
     
     private int board_id;
-    private int member_id;
+    private String firstName;
+    private String Surname;
     private String content;
     private String dateStamp;
     private String[] splitDate;
     private String finalDate;
+    private String imgSrc;
+    private String memberId;
 
     public Post() {
         this.board_id = 0;
-        this.member_id = 0;
+        this.firstName = "";
+        this.Surname = "";
         this.content = "";
         this.dateStamp = "";
     }
     
-    public Post(int board_id, int member_id, String content, String dateStamp) {
+    public Post(int board_id, String firstName, String surname, String content,
+            String dateStamp, String imgSrc, String memberId) {
         this.board_id = board_id;
-        this.member_id = member_id;
+        this.Surname = surname;
+        this.firstName = firstName;
         this.content = content;
         this.dateStamp = editDate(dateStamp);
+        this.imgSrc = imgSrc;
+        this.memberId = memberId;
     }
     
     private String editDate(String tempDate){
@@ -48,13 +56,23 @@ public class Post {
         this.board_id = board_id;
     }
 
-    public int getMember_id() {
-        return member_id;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setMember_id(int member_id) {
-        this.member_id = member_id;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
+
+    public String getSurname() {
+        return Surname;
+    }
+
+    public void setSurname(String Surname) {
+        this.Surname = Surname;
+    }
+
+    
 
     public String getContent() {
         return content;
@@ -70,6 +88,22 @@ public class Post {
 
     public void setDateStamp(String dateStamp) {
         this.dateStamp = dateStamp;
+    }
+
+    public String getImgSrc() {
+        return imgSrc;
+    }
+
+    public void setImgSrc(String imgSrc) {
+        this.imgSrc = imgSrc;
+    }
+
+    public String getMemberId() {
+        return memberId;
+    }
+
+    public void setMemberId(String memberId) {
+        this.memberId = memberId;
     }
     
     

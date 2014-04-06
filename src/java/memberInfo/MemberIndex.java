@@ -19,8 +19,10 @@ public class MemberIndex {
     private ArrayList<member> RecruitList = new ArrayList<>();
     private ArrayList<member> CoachList = new ArrayList<>();
     private ArrayList<member> CommitteeList = new ArrayList<>();
+    private ArrayList<member> allMembers = new ArrayList<>();
     private member member;
     private DbCon dbCon = new DbCon();
+    private member m;
     
     
     public MemberIndex() {
@@ -52,7 +54,8 @@ public class MemberIndex {
                    this.member.setSent(dbCon.getAllSentMessages(rs.getString(1)));
                    
                   
-       
+                       this.allMembers.add(member);
+                       
                     switch (rs.getString(2)) {
                         case "1":this.RecruitList.add(member); ;
                                  break;
@@ -70,7 +73,7 @@ public class MemberIndex {
                 }
             }
             catch (SQLException e) {
-                
+               System.out.print(e);
             }
         }
 
@@ -90,6 +93,22 @@ public class MemberIndex {
         return CommitteeList;
     }
 
+    public ArrayList<member> getAllMembers() {
+        return this.allMembers;
+    } 
+    
+    public member getMemberAtIndex(int index){
+        
+        for (member meb : allMembers){        
+            if(meb.getMember_id()== index){
+                 return meb;
+            }else{            
+                m = null;
+            }                  
+        }
+    
+    return m;
+    }
     
     
 }

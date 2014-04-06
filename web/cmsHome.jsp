@@ -27,7 +27,37 @@
     </head>
 
     <body>
-
+        <% if(session.getAttribute("memberId") == null){
+         response.sendRedirect(response.encodeRedirectURL("index.jsp"));
+         } %>
+        <header>
+             <div class="logReg">
+                <%if(session.getAttribute("memberId") == null){%>
+                <a class="log btn">Login</a> <a class="reg btn" href="register.jsp">Register</a>
+                <%}else{%>
+                <a class="btn" href="profile.jsp">Profile</a> <a class="logOut btn" onclick="window.location = 'logout';">Logout</a>
+                <%}%>
+            </div>
+            <div class="navContainer">
+        <img id="logo" src="img/plymouthblitz_logo.png">
+         <ul>
+            <li><a href="home.jsp">DASHBOARD</a></li>
+            <li class="currentLi"><a href="#">CMS +</a>            
+                <ul >
+                    <li><a href="cmsHome.jsp">Home page</a></li>
+                    <li><a href="cmsAbout.jsp">About page</a></li>
+                    <li><a href="cmsContact.jsp">Contact page</a></li>
+                    <li><a href="#">Global</a></li>
+                </ul>
+            </li> 
+            <li><a href="#">MEMBERS</a></li>
+            
+             <li><a href="#">EQUIPMENT</a>
+              </li>
+            
+        </ul> 
+        </div>
+        </header>
 
         <%
             DbCon dbCon = new DbCon();
@@ -137,10 +167,11 @@ $('.new'+id).append("<img class='slide"+id+"' src='"+picFile.result+"'/>");
 function checkFile(file){
     
     if(file.type.match("image.*")){
-      sendFile(file);  
       var temp = file.type;
       imgFileType = temp.replace("image/","");
       
+      sendFile(file);  
+     
    }else{
    $('#uploader').css({"border-color":"#FF5C5C"});
    $('.uploadfeedback').html('FILE TYPE NOT PERMITED');
@@ -163,7 +194,9 @@ checkFile(file);
 
 function sendFile(file){
     
-var reader = new FileReader();     
+var reader = new FileReader();   
+ reader.readAsDataURL(file); 
+ 
  reader.addEventListener("load",function(event){
  picFile = event.target;
  
@@ -191,7 +224,7 @@ $('#thumbContainer').prepend("<img class='uploadImgThumb' src='" + picFile.resul
                 
 });
     
- reader.readAsDataURL(file);  
+ 
 
 
 }
@@ -215,8 +248,8 @@ $('#thumbContainer').prepend("<img class='uploadImgThumb' src='" + picFile.resul
                         <ul>
                             <input  type="text" id="newsTitle" name="title" placeholder="Article Title"></li>
                             <br/>
-                            <li> <textarea name="article" id="newsCon" type="text" placeholder="Article Content"></textarea> </li>
-                            <li><button onclick="createNews()">Publish</button> </li>
+                            <li> <textarea class="addNewsContent" name="article" id="newsCon" type="text" placeholder="Article Content"></textarea> </li>
+                            <li><button class="addNewsContent"onclick="createNews()">Publish</button> </li>
                         </ul>            
                     </div>
                     <div class="newsCont">
@@ -268,7 +301,13 @@ $('#thumbContainer').prepend("<img class='uploadImgThumb' src='" + picFile.resul
 $(document).ready(function()
 {
 
+$( "#newsTitle" ).focus(function() {
+  $('.addNewsContent').show();
+});
 
+$( "#newsTitle" ).focusout(function() {
+  $('.addNewsContent').hide();
+});
 
 
 $(".slideshow").hover(function () {
@@ -294,7 +333,7 @@ var ID=$(this).attr('id');
 
 var dataStream = 'slideId='+ ID +'&opId=2'; 
 
-  $.ajax({
+$.ajax({
     type: "POST",
     url: "EditHome",
     data: dataStream,
@@ -379,7 +418,7 @@ $(".text").show();
 
 
 
-
+    <div class="footerBackend"></div>
     </body>
 
 </html>

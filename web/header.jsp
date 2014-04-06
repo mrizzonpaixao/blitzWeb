@@ -13,6 +13,7 @@
  Global global = dbCon.getGlobalElements();
 %>
 	<header>
+             <p class="welcome">Welcome, <%out.print(session.getAttribute("email"));%> </p>
 	<div class="navContainer">
 	<img class="logo" src="img/<%out.print(global.getLogoSrc());%>"/>
 		<nav>
@@ -24,7 +25,13 @@
 			</ul>
                     </nav>
 		</div>
-            <div class="logReg"> <a class="log btn">Login</a> <a class="reg btn" href="register.jsp">Register</a> </div>
+            <div class="logReg">
+                <%if(session.getAttribute("memberId") == null){%>
+                <a class="log btn">Login</a> <a class="reg btn" href="register.jsp">Register</a>
+                <%}else{%>
+                <a class="btn" href="home.jsp">Dashboard</a> <a class="logOut btn" onclick="window.location = 'logout';">Logout</a>
+                <%}%>
+            </div>
             <div class="bubble">
                 <img src="img/pointLog.png" />
                 <div class="bubbleContent">                

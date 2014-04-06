@@ -56,7 +56,7 @@ public class Register extends HttpServlet {
         request.setAttribute("email", usermail);
         request.setAttribute("number", contactNum);
         request.getRequestDispatcher("register.jsp").forward(request, response);        
-        }        
+        } else{       
         
         //hashes password
             MessageDigest mdAlgorithm = null;
@@ -87,6 +87,7 @@ public class Register extends HttpServlet {
              session.setAttribute("firstTime", "true");
              session.setAttribute("memberId", dbCon.getMemberId());
              session.setAttribute("role", dbCon.getMemberRole());
+             session.setAttribute("email", usermail);
              
             response.sendRedirect(response.encodeRedirectURL("home.jsp"));
                    
@@ -102,7 +103,7 @@ public class Register extends HttpServlet {
         } catch (SQLException ex) {
             Logger.getLogger(Register.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+        }
         
     
         

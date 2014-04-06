@@ -4,13 +4,12 @@
  */
 package Servlets;
 
+import CMS.Post;
 import DBCon.DbCon;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -19,13 +18,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import memberInfo.MemberIndex;
+import memberInfo.member;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 /**
  *
  * @author Matheus
  */
-@WebServlet(name = "Login", urlPatterns = {"/Login"})
-public class Login extends HttpServlet {
+@WebServlet(name = "mail", urlPatterns = {"/mail"})
+public class mail extends HttpServlet {
+    private ArrayList<member> list;
 
     /**
      * Processes requests for both HTTP
@@ -40,50 +44,59 @@ public class Login extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
-        DbCon dbCon = new DbCon();
-        
-        String email = request.getParameter("usermail");
-        String password = request.getParameter("password");
-     
-         //hashes password
-            MessageDigest mdAlgorithm = null;
+        PrintWriter out = response.getWriter();
         try {
-            mdAlgorithm = MessageDigest.getInstance("MD5");
-        } catch (NoSuchAlgorithmException ex) {
-            Logger.getLogger(Register.class.getName()).log(Level.SEVERE, null, ex);
-        }
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            ObjectOutputStream oos = new ObjectOutputStream(baos);
-            oos.writeObject(password);
-            mdAlgorithm.update(baos.toByteArray());
             
-            byte[] digest = mdAlgorithm.digest();
-            StringBuilder hexString = new StringBuilder();
-
-            for (int i = 0; i < digest.length; i++) {
-                String x = Integer.toHexString(0xFF & digest[i]);
-                if (x.length() < 2) {
-                    x = "0" + x;
-                }
-                hexString.append(x);
-            }
+          HttpSession session = request.getSession();
+          MemberIndex members;
+          
+            DbCon dbCon = new DbCon();
+            String opId = request.getParameter("opId");
+            String val =  request.getParameter("val");
+            String requestType = request.getMethod();
+                   
+                       
             
-            if(dbCon.checkLogin(email,hexString.toString())){
-                
-                 HttpSession session = request.getSession();
+            
+            if(requestType.equals("GET")){                 
+             
+             members = dbCon.getMemberAtVal(val);
+             list = members.getAllMembers();
+            JSONArray ja = new JSONArray();
+            JSONObject mainObj = new JSONObject();
+            
+             for (member m : list) {
                  
-                session.setAttribute("memberId", dbCon.getMemberId());
-                session.setAttribute("role", dbCon.getMemberRole());
-                session.setAttribute("email", email);
+             JSONObject jo = new JSONObject();
                 
-              response.sendRedirect(response.encodeRedirectURL("home.jsp"));
+               jo.put("memberId", m.getMember_id());
+               jo.put("firstName", m.getFirstName());
+               jo.put("surname", m.getSurname());
+               jo.put("email", m.getEmail());
+               jo.put("imgSrc", m.getImgSrc());             
+            ja.add(jo); 
+                               
+            
+            }
+             
+            mainObj.put("members", ja);
+            mainObj.put("count", list.size());                        
+            response.setContentType("application/json");
+            response.getWriter().print(mainObj);
+            response.getWriter().flush();
+                   
+                    
             
             }else{
-             request.setAttribute("error", "Incorrect email or password");
-             request.setAttribute("email", email);
-             request.setAttribute("psw", password);
-             request.getRequestDispatcher("index.jsp").forward(request, response);
+                
+            
+            
+          
             }
+            
+        } finally {            
+            out.close();
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -102,7 +115,7 @@ public class Login extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(mail.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -121,7 +134,7 @@ public class Login extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(mail.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

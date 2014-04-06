@@ -11,6 +11,8 @@ import CMS.Fixture;
 import CMS.Global;
 import CMS.Home;
 import CMS.NewsArticle;
+import CMS.NoticeBoard;
+import CMS.Post;
 import CMS.Slide;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -58,6 +60,9 @@ public class DbCon {
     private String memberId;
     private NewsArticle article;
     private NewsArticle newsArticle;
+    private ArrayList<Post> Posts;
+    private NoticeBoard notice;
+    private Post post;
             
     public DbCon() {
         this.added = true;
@@ -156,18 +161,25 @@ public class DbCon {
     }
     
     public Boolean checkEmail(String email) throws SQLException{
-        Boolean emailFound=false;
-        
+                
         queryString = "SELECT COUNT(*) FROM members\n" +
 "WHERE email='"+email+"'";
         pstmt = conn.prepareStatement(queryString);
         rset = pstmt.executeQuery();
-        
-        if (rset.isBeforeFirst()) {
-        emailFound=true;
-        }
+        String temp = "";
+         while (rset.next()) {
+         
+             temp = rset.getString(1);
+         
+         }
+         
+         if(temp.contains("0")){
+         return false;
+         }else{
+         return true;
+         }
     
-    return emailFound;
+   
     }
     
     public ArrayList<Fixture> getAllFixtures() throws SQLException{
@@ -255,6 +267,45 @@ public class DbCon {
     return about;
     }
     
+    public Boolean editAboutImg(String memberId, String imgSrc) throws SQLException{
+    
+    Boolean temp = true;
+    String aboutTxt ="";
+    queryString = "SELECT about_txt FROM cms_about ORDER BY date_stamp DESC LIMIT 1 ";
+    pstmt = conn.prepareStatement(queryString);
+    rset = pstmt.executeQuery();
+    
+    while (rset.next()) {
+        aboutTxt = rset.getString(1);
+        }
+    
+    queryString = "INSERT INTO cms_about VALUES(null,"+memberId+",'"+aboutTxt+"','"+imgSrc+"',null)";
+    pstmt = conn.prepareStatement(queryString);
+    pstmt.executeUpdate();
+        
+          
+    return temp;
+    } 
+    
+    public Boolean editAboutContent (String memberId, String aboutCont) throws SQLException{
+    
+    Boolean temp = true;
+    String imgSrc ="";
+    queryString = "SELECT about_img FROM cms_about ORDER BY date_stamp DESC LIMIT 1 ";
+    pstmt = conn.prepareStatement(queryString);
+    rset = pstmt.executeQuery();
+    
+    while (rset.next()) {
+        imgSrc = rset.getString(1);
+        }
+    
+    queryString = "INSERT INTO cms_about VALUES(null,"+memberId+",'"+aboutCont+"','"+imgSrc+"',null)";
+    pstmt = conn.prepareStatement(queryString);
+    pstmt.executeUpdate();
+        
+          
+    return temp;
+    } 
     public ContactUs getContactUsPage() throws SQLException{
     
         queryString = "SELECT * FROM cms_contact ORDER BY date_stamp DESC LIMIT 1 ";
@@ -264,6 +315,20 @@ public class DbCon {
        contact = new ContactUs (rset);
     
     return contact;
+    }
+    
+    public Boolean updateContactInfo(String memberId, String postalPostCode, String postalCity, 
+            String postalFirstLine, String gamePostcode, String gameFirstline, String gameCity) throws SQLException{
+    
+        Boolean temp = true;
+        
+        queryString = "INSERT INTO cms_contact VALUES(null,"+memberId+",'"+postalPostCode+"','"+postalFirstLine+
+                "','"+postalCity+"','"+gamePostcode+"','"+gameFirstline+"','"+gameCity+"',null)";
+        
+    pstmt = conn.prepareStatement(queryString);
+    pstmt.executeUpdate();
+    
+    return temp;
     }
     
     public Global getGlobalElements() throws SQLException{
@@ -426,8 +491,10 @@ public class DbCon {
                           Integer.parseInt(rset.getString(3)),
                           Integer.parseInt(rset.getString(4)),
                           Integer.parseInt(rset.getString(5))  );
+                     let.setPad(getPadById(rset.getString(3)));
                     let.setHelmet(getHelmetById(rset.getString(4)));
-                    let.setPad(getPadById(rset.getString(3)));
+                   
+                    
         }       
         
         return let;
@@ -435,7 +502,7 @@ public class DbCon {
     
     private Helmet getHelmetById(String id) throws SQLException{
         
-        queryString = "SELECT * FROM cms_fixtures";
+        queryString = "SELECT * FROM helmets WHERE helmet_id ="+id;
         pstmt = conn.prepareStatement(queryString);
         rset = pstmt.executeQuery(); 
         
@@ -451,15 +518,15 @@ public class DbCon {
     
      private ShoulderPad getPadById(String id) throws SQLException{
         
-         queryString = "SELECT * FROM cms_fixtures";
+        queryString = "SELECT * FROM shoulder_pads WHERE pad_id = 1";         
         pstmt = conn.prepareStatement(queryString);
-        rset = pstmt.executeQuery(); 
+        ResultSet r = pstmt.executeQuery(); 
         
-         while (rset.next()) {
+         while (r.next()) {
                     this.pad = new ShoulderPad(
-                          Integer.parseInt(rset.getString(1)),                          
-                          rset.getString(2),
-                          rset.getString(3)
+                          Integer.parseInt(r.getString(1)),                          
+                          r.getString(2),
+                          r.getString(3)
                             );
          }
     
@@ -504,6 +571,147 @@ public class DbCon {
         return memberId;
     }
     
+    public String addPost(String content, String id) throws SQLException {
     
+    queryString = "INSERT INTO notice_board VALUES(null,"+id+",'"+content+"',null)";
+        try {
+            pstmt = conn.prepareStatement(queryString);
+            pstmt.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(DbCon.class.getName()).log(Level.SEVERE, null, ex);
+           return "fail"; 
+        }
+        
+        queryString = "select LAST_INSERT_ID() from cms_slideshow";
+        try {
+            pstmt = conn.prepareStatement(queryString);
+        } catch (SQLException ex) {
+            Logger.getLogger(DbCon.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    rset  = pstmt.executeQuery();
     
+    while (rset.next()) {
+        return rset.getString(1);
+        }
+            
+    return "fail";
+    }
+    
+   public NoticeBoard getallPosts() throws SQLException{
+   
+    queryString = "SELECT board_id, first_name, surname, content,"+
+                " date_stamp, member_img, members.member_id FROM blitzweb.notice_board INNER JOIN members" +
+                           " on notice_board.member_id = members.member_id " +
+                                     "ORDER BY notice_board.date_stamp ASC;";
+        
+        pstmt = conn.prepareStatement(queryString);
+        rset = pstmt.executeQuery();
+        
+        notice = new NoticeBoard(rset);
+    
+   
+   return notice;
+   }
+   
+   public Post getPostsAtId(String id) throws SQLException{
+   
+    queryString = "SELECT board_id, first_name, surname, content,"+
+                " date_stamp, member_img, members.member_id FROM blitzweb.notice_board INNER JOIN members" +
+                           " on notice_board.member_id = members.member_id " +
+                                     "WHERE board_id = "+id+";";
+        
+        pstmt = conn.prepareStatement(queryString);
+        rset = pstmt.executeQuery();
+        
+        while (rset.next()) {
+                    post = new Post(
+                          Integer.parseInt(rset.getString(1)),
+                          rset.getString(2),
+                          rset.getString(3),
+                          rset.getString(4), 
+                          rset.getString(5),
+                          rset.getString(6),
+                          rset.getString(7)  
+                            );
+                                 
+                }
+    
+   
+   return post;
+   }
+   
+   public Boolean updateMemberImg(String imgName, String memberId) throws SQLException{
+    
+    Boolean temp = true;
+    
+    queryString = "UPDATE members set member_img = '"+imgName+"' WHERE member_id ="+memberId;
+    pstmt = conn.prepareStatement(queryString);
+    pstmt.executeUpdate();
+    
+    return temp;
+    }
+   
+   public Boolean editMemberDetail(String userId, String pos, String role,
+           String firstName, String surname, String email, String contact) throws SQLException{
+   
+   Boolean temp = true;
+  
+    queryString = "UPDATE members set role_id="+ role +",first_name='"+firstName+"' ,surname='"+
+            surname+"' ,email='"+email+"' ,contact_num='"+contact+"' ,possition_id=" + pos +" WHERE member_id = " + userId ;
+    pstmt = conn.prepareStatement(queryString);
+    pstmt.executeUpdate();
+    
+    return temp;
+   }
+    
+   public Boolean editStats(String statId,  String RushYds , String PasYds,
+             String RecYds , String Tds , String Sck, String Tckl ) throws SQLException{
+   
+   Boolean temp = true;
+  
+    queryString = "UPDATE stats set rush_yds="+RushYds+", pas_yds="+PasYds
+            +", recv_yds="+RecYds+", tds="+Tds+", tckls="+Tckl+", scks="+Sck
+            +" WHERE stat_id = " + statId ;
+    pstmt = conn.prepareStatement(queryString);
+    pstmt.executeUpdate();
+    
+    return temp;
+   }
+   
+   public Boolean editmemberDesc(String memberId,  String desc) throws SQLException{
+   
+   Boolean temp = true;
+  
+    queryString = "UPDATE members set description='"+desc+"' WHERE member_id = " + memberId ;
+    pstmt = conn.prepareStatement(queryString);
+    pstmt.executeUpdate();
+    
+    return temp;
+   }
+  
+   public Boolean editFee(String userId, String row, String val ) throws SQLException{
+   Boolean temp = true;
+  
+    queryString = "UPDATE fees set "+row+"="+val+" WHERE member_id = " + userId ;
+    pstmt = conn.prepareStatement(queryString);
+    pstmt.executeUpdate();
+    
+    return temp;
+   
+   }
+
+    public MemberIndex getMemberAtVal(String val) throws SQLException {
+        
+        MemberIndex m;
+        
+         queryString = "SELECT * FROM members WHERE first_name LIKE '"+val
+                 +"%' OR surname LIKE '"+val+"%' OR email LIKE '"+val+"%' LIMIT 4";
+         
+        pstmt = conn.prepareStatement(queryString);
+        rset = pstmt.executeQuery();
+        
+        m = new  MemberIndex(rset);
+       
+        return m;
+    }
 }

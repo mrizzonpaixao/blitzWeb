@@ -10,7 +10,7 @@ root {
     display: block;
 }
 
-h2, h3, h1{color:#00106e;}
+h2, h3, h1, h4{color:#00106e;}
 
 a{
 text-decoration: none;}
@@ -58,14 +58,20 @@ header{
 width:100%;
 background:#fff;
 box-shadow: 0px 0px 8px gray;
-z-index:3;
+z-index:4;
 }
 .logReg{
 position:absolute;
-top:15px;
+top:25px;
 right:40px;
 overflow: hidden;
 }
+.welcome{position:absolute;
+top:5px;
+right:40px;
+overflow: hidden;
+padding:0px;
+margin:0px;}
 
 .btn{
 float: left;
@@ -223,6 +229,7 @@ padding-top:40px;
 padding-bottom:40px;
 margin:0px auto;
 z-index:1;
+
 }
 
 /*HOME*/
@@ -312,7 +319,8 @@ width:900px;
 height:400px;
 margin:0px 25px;
 box-shadow: 0 0 8px #5C5C5C;
-overflow:hidden;}
+overflow:hidden;
+z-index: 4;}
 
 .slide{
 position: absolute; 
@@ -348,19 +356,20 @@ margin:0 auto;
 
 #aboutImg{
 width:950px;
-height:430px}
+height:430px
+}
 
 #aboutContent{
 max-width:250px;
 color:#fff;
-font-weight: bold;
-height:100%;
+height:380px;
 padding:25px;
 position:absolute;
 top:0px;
 right:-300px;
 background-image: url('img/aboutBG.png');
-background-repeat:repeat;}
+background-repeat:repeat;
+overflow: auto;}
 
 
 
@@ -468,6 +477,7 @@ max-height:150px;
 #youTube:hover{background:url(img/socialNet.png) -51px -51px;}
 
 #twitter:hover{background:url(img/socialNet.png) -50px -103px;}
+
 
 .contactTitle{border-bottom:solid 1px #acacac; color:#00106e; display:block;  width:250px; margin-left:100px; text-align: center;}
 

@@ -81,7 +81,7 @@
             
                 for (member m : Players){
                     stats = m.getStats();
-                    if(cnt==0){temp = "odd";}else{temp = "even";}
+                    if(cnt==0){temp = "odd";++cnt;}else{temp = "even"; cnt=0;}
                 %>
                             <tr class="<%out.print(temp);%> rows">
                                 <td><a href="#"><%out.print(m.getFullname());%></a></td>
@@ -93,8 +93,8 @@
                                 <td><%out.print(stats.getScks());%></td>
                                 <td><%out.print(stats.getTckls());%></td>
                             </tr>
-                    <%++cnt;}
-                    if(cnt==1){cnt=0;}
+                    <%}
+                    
                     %>        
                         </table>
                         <script>
